@@ -3,7 +3,7 @@ class Graph():
         self._graph_type=graph_type
         self.adj_list_representation={}
         
-    def add_vertex(self,u:(int,str)):
+    def add_vertex(self,u:(int,str))->dict:
         """add_vertex 
 
         Description
@@ -21,6 +21,28 @@ class Graph():
         else:
             print(f'Vertex {u} already exists.')
     
-    def remove_vertices(self,u):
-        pass
+    def remove_vertex(self,u:(int,str))->dict:
+        """remove_vertex
+
+        Description
+        -----------
+        Methods to remove a vertex. Please not that we do not remove only a vertex but also all 
+        we need to remove vertex from being a neighbor of all other vertices. 
+        Parameters
+        ----------
+        u : int,str
+            _description_
+
+        Returns
+        -------
+        dict
+        """
+        if u in self.adj_list_representation:
+            del self.adj_list_representation[u]
+            for v in self.adj_list_representation:
+                if u in self.adj_list_representation[v]:
+                    v.remove(u)
+        
+        
+        
     
