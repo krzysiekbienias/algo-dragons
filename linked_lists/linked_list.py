@@ -1,3 +1,8 @@
+from random import randint
+import numpy as np
+
+np.random.seed(5)
+
 class Node:
     def __init__(self, value) -> None:
         """
@@ -95,7 +100,7 @@ class LinkedList:
 
         return False
 
-    def get(self, index: int) -> Node:
+    def get_value(self, index: int) -> Node:
         """
         Description
         -----------
@@ -116,10 +121,28 @@ class LinkedList:
         current = self.head
         for _ in range(index):
             current = current.next
-        return current.value
+        return current
 
-    def set_value(self):
-        pass
+    def set_value(self, index: int, new_value: int):
+        temp_node = self.get_value(index)
+        if temp_node:
+            temp_node.value = new_value
+        else:
+            return None
+
+    def generate(self,n:int,min_value:int,max_value:int):
+        self.head=None
+        self.tail=None
+        for i in range(n):
+            self.append(np.random.randint(min_value,max_value))
+        return self
+
+
+
+    def remove_all(self):
+        self.head = None
+        self.tail = None
+        self.length = 0
 
 
 class LinkedListWithOneNode:
@@ -155,8 +178,12 @@ if __name__ == '__main__':
     linked_list.append(3)
 
     print(linked_list)
-    print(linked_list.head.value)
-    print(linked_list.tail.value)
-    linked_list.traverse()
+    linked_list.set_value(1, 22)
+    print(linked_list)
+
+    custom_list=LinkedList()
+    custom_list.generate(10,1,100)
+    print(custom_list)
+
 
     print("the end")
