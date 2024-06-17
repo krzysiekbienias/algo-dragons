@@ -1,5 +1,5 @@
 class Node:
-    def __init__(self, val) -> None:
+    def __init__(self, value) -> None:
         """
         Description
         -----------
@@ -7,10 +7,10 @@ class Node:
 
         Parameters
         ----------
-        val : int
+        value : int
         """
 
-        self.val = val
+        self.value = value
         self.next = None
 
 
@@ -27,13 +27,14 @@ class LinkedList:
         self.length = 0
 
     def __str__(self):
-        temp_node=self.head
-        result=''
+        temp_node = self.head
+        result = ''
         while temp_node is not None:
-            result=str(temp_node.value)
+            result += str(temp_node.value)
             if temp_node.next is not None:
-                result+=' -> '
-            temp_node=temp_node.next
+                result += ' -> '
+            temp_node = temp_node.next
+
         return result
 
     def append(self, value: int):
@@ -47,15 +48,78 @@ class LinkedList:
             self.tail = new_node
         self.length += 1
 
-    def prepend(self,value:int):
-        new_node=Node(value)
+    def prepend(self, value: int):
+        new_node = Node(value)
         if self.head is None:
-            self.head=new_node
-            self.tail=new_node
+            self.head = new_node
+            self.tail = new_node
         else:
-            new_node.next=self.head
-            self.head=new_node
-        self.length+=1
+            new_node.next = self.head
+            self.head = new_node
+        self.length += 1
+
+    def traverse(self) -> None:
+        """
+        Description
+        -----------
+        Traverse the linked list
+        Returns
+        -------
+        None
+
+        """
+        temp = self.head
+        while temp is not None:
+            print(temp.value)
+            temp = temp.next
+
+    def search(self, target: int) -> bool:
+        """
+        Description
+        -----------
+        Checks if a value is present in the linked list.
+
+        Parameters
+        ----------
+        target
+
+        Returns
+        -------
+        bool
+
+        """
+        temp = self.head
+        while temp is not None:
+            if temp.value == target:
+                return True
+
+        return False
+
+    def get(self, index: int) -> Node:
+        """
+        Description
+        -----------
+        Get the Node at the given index.
+
+        Parameters
+        ----------
+        index:int
+
+        Returns
+        -------
+        None
+        """
+        if index == -1:
+            return self.tail
+        if index < -1 or index > self.length:
+            return None
+        current = self.head
+        for _ in range(index):
+            current = current.next
+        return current.value
+
+    def set_value(self):
+        pass
 
 
 class LinkedListWithOneNode:
@@ -83,7 +147,16 @@ class LinkedListWithOneNode:
 
 
 if __name__ == '__main__':
+    linked_list = LinkedList()
+    linked_list.append(1)
+    linked_list.append(1)
+    linked_list.append(2)
+    linked_list.append(3)
+    linked_list.append(3)
 
-
+    print(linked_list)
+    print(linked_list.head.value)
+    print(linked_list.tail.value)
+    linked_list.traverse()
 
     print("the end")
