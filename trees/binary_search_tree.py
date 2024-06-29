@@ -1,11 +1,11 @@
 from binarytree import tree
 import graphviz
 
-class Node:
-    def __init__(self,value,left=None,right=None) -> None:
+class BSTNode:
+    def __init__(self,value,left_child=None,right_child=None) -> None:
         self.value=value
-        self.left=left
-        self.right=right
+        self.left_child=left_child
+        self.right_child=right_child
 
 
 class BinarySearchTree:
@@ -17,7 +17,7 @@ class BinarySearchTree:
         self.root=None
 
     def insert(self,value:int):
-        new_node=Node(value)
+        new_node=BSTNode (value)
         if self.root is None:
             self.root=new_node
             return True
