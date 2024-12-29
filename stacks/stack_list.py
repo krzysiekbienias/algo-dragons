@@ -12,8 +12,6 @@ class Stack:
         print(f"Element {value} has been successfully inserted")
 
 
-
-
     def is_empty(self):
         if self.list_stack==[]:
             print("The stack is empty")

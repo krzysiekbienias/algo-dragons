@@ -1,7 +1,9 @@
-from random import randint
+from typing import Any
+
 import numpy as np
 
 np.random.seed(5)
+
 
 class Node:
     def __init__(self, value) -> None:
@@ -100,7 +102,7 @@ class LinkedList:
 
         return False
 
-    def get_value(self, index: int) -> Node:
+    def get_value(self, index: int) -> Node | None:
         """
         Description
         -----------
@@ -118,7 +120,7 @@ class LinkedList:
             return self.tail
         if index < -1 or index > self.length:
             return None
-        current = self.head
+        current: Node = self.head
         for _ in range(index):
             current = current.next
         return current
@@ -130,14 +132,12 @@ class LinkedList:
         else:
             return None
 
-    def generate(self,n:int,min_value:int,max_value:int):
-        self.head=None
-        self.tail=None
+    def generate(self, n: int, min_value: int, max_value: int):
+        self.head = None
+        self.tail = None
         for i in range(n):
-            self.append(np.random.randint(min_value,max_value))
+            self.append(np.random.randint(min_value, max_value))
         return self
-
-
 
     def remove_all(self):
         self.head = None
@@ -168,6 +168,8 @@ class LinkedListWithOneNode:
             print(str(temp.val) + "->")
             temp = temp.next
 
+# is it also annother approach where linked ist is constructed and manipulated by managing nodes directly
+
 
 if __name__ == '__main__':
     linked_list = LinkedList()
@@ -181,9 +183,8 @@ if __name__ == '__main__':
     linked_list.set_value(1, 22)
     print(linked_list)
 
-    custom_list=LinkedList()
-    custom_list.generate(10,1,100)
+    custom_list = LinkedList()
+    custom_list.generate(10, 1, 100)
     print(custom_list)
-
 
     print("the end")
