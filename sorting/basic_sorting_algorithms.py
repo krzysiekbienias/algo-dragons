@@ -14,6 +14,7 @@ def bubble_sort(arr: List[int]):
 
 
 
+
 def insertion_sorting(array):
     #cards analogy
     for i in range(1, len(array)):

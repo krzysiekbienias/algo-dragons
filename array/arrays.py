@@ -18,6 +18,43 @@ def high_five(items: List[List[int]]) -> List[List[int]]:
     results_sorted=sorted(results,key=lambda x:x[0])
     return results_sorted
 
+def kth_largest_element_in_array(array: List[int], k: int) -> List[int]:
+    # version with sorting is in heap/challenges module
+    array = sorted(array, reverse=True)
+    return array[:k-1]
+
+#AlgoExpert
+def tournament_winner(competitions, results):
+    table=dict()
+    for teams in competitions:
+        for name in teams:
+            table[name]=0
+    for competition,outcome in zip(competitions,results):
+        winner=get_winner(competition,outcome)
+        table[winner]+=3
+    league_winner=max(table,key=table.get)
+    return league_winner
+
+def get_winner(teams, result):
+    if result ==0:
+        return teams[1]
+    else:
+        return teams[0]
+
+# i don't know from which side it comes from.
+def containsNearbyDuplicate(nums: List[int], k: int) -> bool:
+    l = 0
+    p = len(nums) - 1
+    while l < p:
+        if nums[l] == nums[p] and abs(l - p) <= k:
+            return True
+        l += 1
+    l = 0
+
+    return False
+
+
+
 
 
 if __name__ == '__main__':
