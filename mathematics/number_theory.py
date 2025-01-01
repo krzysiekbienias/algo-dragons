@@ -99,6 +99,15 @@ def sum_of_digits(n: int) -> int:
 def perfect_number(n: int) -> bool:
     pass
 
+#292 NIm game
+def nim_game(n: int) -> bool:
+    # orginal game we may take 1 2 or 3 stones from heap
+    if n%4 != 0:
+        return True
+    else:
+        return False
+
+
 
 
 if __name__ == '__main__':

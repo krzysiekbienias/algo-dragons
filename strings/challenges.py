@@ -22,11 +22,44 @@ def length_of_longest_substring(input_string: str) -> int:
 
     return max_length
 
+
+# 520. Detect capital
+def detect_capital(word: str) -> bool:
+    if word.isupper():
+        return True
+
+    if word.islower():
+        return True
+
+    if word[0].isupper and word[1:].islower():
+        return True
+
+    else:
+        return False
+
+
+# 389 Find the difference
+
+def find_difference(word1: str, word2: str) -> str:
+    #this is a difference of characters in words
+    word_dict = dict()
+    for i in range(len(word1)):
+        if word1[i] in word_dict:
+            word_dict[word1[i]] += 1
+        else:
+            word_dict[word1[i]] = 1
+    for i in range(len(word2)):
+        if word2[i] in word_dict:
+            word_dict[word2[i]] -= 1
+        else:
+            word_dict[word2[i]] = 1
+    for key, value in word_dict.items():
+        if value != 0:
+            return key
+
+
 if __name__ == '__main__':
-    test_case1="abccc"
-    length_of_longest_substring("pwwkew")
-
-
-
-
-
+    test_case1 = "abccc"
+    print(length_of_longest_substring("pwwkew"))
+    word1 = 'a'
+    word2 = 'aa'
