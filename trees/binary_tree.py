@@ -81,6 +81,21 @@ def branch_sums(root: BinaryTree) -> List:
      if tree.value==-3:
          return math.floor(left_value / right_value)
 
+def is_mirror(bt1,bt2):
+    #both nodes are None
+    if not bt1 and not bt2:
+        return True
+    # if one node is None the tree cannot be symetrical
+    if not bt1 or not bt2:
+        return False
+    return (bt1.value==bt2.value and is_mirror(bt1.left,bt2.right) #outer children
+            and is_mirror(bt1.right,bt2.left)) #iiner children
+
+def symmetrical_tree(tree):
+    if not tree:
+        return True
+    return is_mirror(tree.left,tree.right)
+
 
 
 

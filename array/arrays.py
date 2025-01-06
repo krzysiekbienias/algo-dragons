@@ -59,20 +59,20 @@ def containsNearbyDuplicate(nums: List[int], k: int) -> bool:
     return False
 
 
-def smallest_difference(arrayOne, arrayTwo):
-    arrayOne.sort()
-    arrayTwo.sort()
+def smallest_difference(array_one, array_two):
+    array_one.sort()
+    array_two.sort()
     i, j = 0, 0
     min_diff = float('inf')
     closest_pair = []
-    while i < len(arrayOne) and j < len(arrayTwo):
-        current_diff = abs(arrayOne[i] - arrayTwo[j])
+    while i < len(array_one) and j < len(array_two):
+        current_diff = abs(array_one[i] - array_two[j])
         if current_diff == 0:
-            return [arrayOne[i], arrayTwo[j]]
+            return [array_one[i], array_two[j]]
         min_diff = min(min_diff, current_diff)
         if current_diff <= min_diff:  # update closest pair only if differnece is smaller
-            closest_pair = [arrayOne[i], arrayTwo[j]]
-        if arrayOne[i] < arrayTwo[j]:
+            closest_pair = [array_one[i], array_two[j]]
+        if array_one[i] < array_two[j]:
             i += 1
         else:
             j += 1
@@ -129,6 +129,15 @@ def subarray_sort(array):
     while r < n - 1 and array[r + 1] < subarray_max:
         r += 1
     return [l, r]
+
+def missing_numbers(nums):
+    result=[]
+    numbers_in_scope=set(nums)
+    for num in range(1,len(nums)+3):
+        if num not in numbers_in_scope:
+            result.append(num)
+    return result
+
 
 
 if __name__ == '__main__':

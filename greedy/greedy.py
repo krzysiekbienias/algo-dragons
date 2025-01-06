@@ -88,8 +88,29 @@ def best_time_to_buy_and_sell_multiple_transactions(prices: List[int]):
     return total_profit
 
 
+def container_with_water(height: List[int]):
+    left = 0
+    right = len(height) - 1
+    max_area = 0
+    width = right - left
+    while left < right:
+        max_area = max(max_area, min(height[left], height[right]) * width)
+        if height[left] <= height[right]:
+            left += 1
+            width -= 1
+        else:
+            right -= 1
+            width -= 1
+    return max_area
+
+
 if __name__ == '__main__':
     t1_queryies = [3, 2, 1, 2, 6]
+    container_t1 = [1, 8, 6, 2, 5, 4, 8, 3, 7]
+    container_t2 = [0, 1, 1, 0, 0]
+    print(container_with_water(container_t1))
+    print(container_with_water(container_t2))
+
     print(minimum_waiting_time(queries=t1_queryies))
     print(min_total_time(queries=t1_queryies))
 
