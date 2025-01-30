@@ -142,6 +142,37 @@ def is_valid_subsequence(array,sequence):
     pass
 
 
+# version where we may sort
+def largest_range(arr):
+    #edge case
+    if not arr:
+        return []
+    result=[]
+    arr.sort()
+    max_range=0
+    start=arr[0]
+    for i in range(1,len(arr)):
+        # case when we have duplicates
+        if arr[i]==arr[i-1]:
+            continue
+        elif arr[i]!=arr[i-1]+1: # gap in sequence.
+            temp_range=arr[i-1]-start+1
+            if temp_range>max_range:
+                max_range=temp_range
+                result=[start,arr[i-1]]
+            start=arr[i] # new start range
+    # final check for the last range
+    length=arr[-1]-start+1
+    if length>max_range:
+        result=[start,arr[-1]]
+    return result
+
+
+
+
+    pass
+
+
 
 if __name__ == '__main__':
     subarray_sort(array=[1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])
