@@ -138,6 +138,9 @@ def missing_numbers(nums):
             result.append(num)
     return result
 
+def is_valid_subsequence(array,sequence):
+    pass
+
 
 
 if __name__ == '__main__':

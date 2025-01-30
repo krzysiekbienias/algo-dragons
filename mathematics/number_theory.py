@@ -90,25 +90,38 @@ def power(x: int, y: int) -> int:
     return power(x, y - 1) * y
 
 
-def sum_of_digits(n: int) -> int:
-    if n == 0:
-        return 0
-    else:
-        return n % 10 + sum_of_digits(n // 10)
+def sum_of_difgits_iterative(num: int) -> int:
+    total_sum = 0
+    while num > 0:
+        last_digit = num % 10  # get last digit per iteration
+        total_sum += last_digit
+        num = num // 10
+    return total_sum
+
 
 def perfect_number(n: int) -> bool:
     pass
 
+
 #292 NIm game
 def nim_game(n: int) -> bool:
     # orginal game we may take 1 2 or 3 stones from heap
-    if n%4 != 0:
+    if n % 4 != 0:
         return True
     else:
         return False
 
-
+def remove_even_digits(num: int) -> int:
+    new_number = 0
+    position = 1
+    while num > 0:
+        digit = num % 10
+        if digit % 2 != 0:
+            new_number += digit * position
+            position *= 10
+        num = num // 10
+    return new_number
 
 
 if __name__ == '__main__':
-    print(greatest_common_divisor(12,2))
+    print(greatest_common_divisor(12, 2))

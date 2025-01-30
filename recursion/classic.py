@@ -22,6 +22,15 @@ def get_nth_fib(n, lookup=None):
 def permutations(arr: list) -> list:
     pass
 
+def sum_of_digits(n: int) -> int:
+    # there is also iterative version->number theory
+
+    if n == 0:
+        return 0
+    else:
+        return n % 10 + sum_of_digits(n // 10)
+
+
 
 
 if __name__ == '__main__':
