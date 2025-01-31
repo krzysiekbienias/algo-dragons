@@ -130,15 +130,17 @@ def subarray_sort(array):
         r += 1
     return [l, r]
 
+
 def missing_numbers(nums):
-    result=[]
-    numbers_in_scope=set(nums)
-    for num in range(1,len(nums)+3):
+    result = []
+    numbers_in_scope = set(nums)
+    for num in range(1, len(nums) + 3):
         if num not in numbers_in_scope:
             result.append(num)
     return result
 
-def is_valid_subsequence(array,sequence):
+
+def is_valid_subsequence(array, sequence):
     pass
 
 
@@ -147,30 +149,53 @@ def largest_range(arr):
     #edge case
     if not arr:
         return []
-    result=[]
+    result = []
     arr.sort()
-    max_range=0
-    start=arr[0]
-    for i in range(1,len(arr)):
+    max_range = 0
+    start = arr[0]
+    for i in range(1, len(arr)):
         # case when we have duplicates
-        if arr[i]==arr[i-1]:
+        if arr[i] == arr[i - 1]:
             continue
-        elif arr[i]!=arr[i-1]+1: # gap in sequence.
-            temp_range=arr[i-1]-start+1
-            if temp_range>max_range:
-                max_range=temp_range
-                result=[start,arr[i-1]]
-            start=arr[i] # new start range
+        elif arr[i] != arr[i - 1] + 1:  # gap in sequence.
+            temp_range = arr[i - 1] - start + 1
+            if temp_range > max_range:
+                max_range = temp_range
+                result = [start, arr[i - 1]]
+            start = arr[i]  # new start range
     # final check for the last range
-    length=arr[-1]-start+1
-    if length>max_range:
-        result=[start,arr[-1]]
+    length = arr[-1] - start + 1
+    if length > max_range:
+        result = [start, arr[-1]]
     return result
 
 
+# compare with two-sum challenge
+def three_sum(array, target):
+    array.sort()
+    n = len(array)
+    result = []
+    for i in range(n - 2):  # to not get out of range exception.
+        if i > 0 and array[i] == array[i - 1]:  # handle with duplicates in array
+            continue
+        left = i + 1
+        right = n - 1
+        while left < right:
+            current_sum= array[i] + array[left] + array[right]
+            if current_sum == target:
+                result.append([array[i], array[left], array[right]])
+                left += 1
+                right -= 1
+                while left < right and array[left]==array[left-1]: #if we have duplicates we only traverse
+                    left +=1
+                while left <right  and array[right]==array[right+1]:
+                    right -= 1
+            elif current_sum < target:
+                left += 1
+            else:
+                right -= 1
+    return result
 
-
-    pass
 
 
 
