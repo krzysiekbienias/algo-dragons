@@ -146,7 +146,7 @@ def is_valid_subsequence(array, sequence):
 
 # version where we may sort
 def largest_range(arr):
-    #edge case
+    # edge case
     if not arr:
         return []
     result = []
@@ -181,22 +181,20 @@ def three_sum(array, target):
         left = i + 1
         right = n - 1
         while left < right:
-            current_sum= array[i] + array[left] + array[right]
+            current_sum = array[i] + array[left] + array[right]
             if current_sum == target:
                 result.append([array[i], array[left], array[right]])
                 left += 1
                 right -= 1
-                while left < right and array[left]==array[left-1]: #if we have duplicates we only traverse
-                    left +=1
-                while left <right  and array[right]==array[right+1]:
+                while left < right and array[left] == array[left - 1]:  # if we have duplicates we only traverse
+                    left += 1
+                while left < right and array[right] == array[right + 1]:
                     right -= 1
             elif current_sum < target:
                 left += 1
             else:
                 right -= 1
     return result
-
-
 
 
 if __name__ == '__main__':
