@@ -1,9 +1,10 @@
-from typing import List
+frgit om typing import List
 
 import numpy as np
 
 
 def matrix_multiplication(mat_a, mat_b):
+    # remember that we need 3 loops to multiply
     c = [[0] * len(mat_b[0]) for _ in range(len(mat_a))]
     for i in range(len(mat_a)):
         for j in range(len(mat_b[0])):

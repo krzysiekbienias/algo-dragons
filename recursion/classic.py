@@ -30,7 +30,15 @@ def sum_of_digits(n: int) -> int:
     else:
         return n % 10 + sum_of_digits(n // 10)
 
-
+# from AlgoExpert
+def product_sum(array,depth=1):
+    total_sum=0
+    for el in array:
+        if isinstance(el,list):
+            total_sum=product_sum(el,depth+1)
+        else:
+            total_sum+=el
+    return total_sum*depth
 
 
 if __name__ == '__main__':
