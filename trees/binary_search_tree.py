@@ -1,4 +1,3 @@
-from binarytree import tree
 from  graphviz import Digraph
 
 
@@ -64,7 +63,7 @@ class BST:
         """
         current_node=self # start from root
         while True:
-            if current_node.value < value:
+            if value < current_node.value:
                 if current_node.left is None:
                     current_node.left = BST(value)
                     break
@@ -152,53 +151,41 @@ class BST:
             array.append(tree.value)
         return array
 
+
     def visualize(self, dot=None):
-        """Visualize the tree using graphviz."""
+        """Visualize the tree using Graphviz with clear left/right child indication.
+        Reocemeded to run this
+        """
         if dot is None:
             dot = Digraph()
 
         dot.node(str(self.value), str(self.value))  # Create the node
 
-        # Visualize left child if exists
+        # If there's a left child, add an explicit left direction
         if self.left:
-            dot.edge(str(self.value), str(self.left.value))
+            dot.edge(str(self.value), str(self.left.value), label="L", tailport="sw", headport="n")
             self.left.visualize(dot)
 
-        # Visualize right child if exists
+        # If there's a right child, add an explicit right direction
         if self.right:
-            dot.edge(str(self.value), str(self.right.value))
+            dot.edge(str(self.value), str(self.right.value), label="R", tailport="se", headport="n")
             self.right.visualize(dot)
 
         return dot
-# def visualize_binary_tree(tree):
-#     dot = graphviz.Digraph()
-#     dot.node(str(tree.root.value))
-#
-#     def add_nodes_edges(node):
-#         if node.left:
-#             dot.node(str(node.left.value))
-#             dot.edge(str(node.value), str(node.left.value))
-#             add_nodes_edges(node.left)
-#         if node.right:
-#             dot.node(str(node.right.value))
-#             dot.edge(str(node.value), str(node.right.value))
-#             add_nodes_edges(node.right)
-#
-#     add_nodes_edges(tree)
-#     dot.render('binary_tree', view=True, format='png')
 
 
 if __name__ == '__main__':
     # Create a BST and insert values using the new method
     root = BST(10)
-    root.insert(5)
-    root.insert(15)
-    root.insert(2)
-    root.insert(1)
-    root.insert(7)
-    root.insert(13)
-    root.insert(14)
-    root.insert(22)
+    root.left = BST(5)
+    root.left.left = BST(2)
+    root.left.left.left = BST(1)
+    root.left.right = BST(7)
+    root.right = BST(15)
+    root.right.left = BST(13)
+    root.right.left.right = BST(14)
+    root.right.right = BST(22)
+    root.insert(12)
 
     # Generate the Markdown representation of the BST
     tree_representation = root.visualize()

@@ -2,6 +2,8 @@
 __pycache__/
 *.py[cod]
 *$py.class
+# generated png
+*.png
 
 # C extensions
 *.so
