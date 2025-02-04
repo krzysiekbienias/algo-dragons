@@ -1,5 +1,5 @@
 from binarytree import tree
-import graphviz
+from  graphviz import Digraph
 
 
 class BSTNode:
@@ -66,13 +66,13 @@ class BST:
         while True:
             if current_node.value < value:
                 if current_node.left is None:
-                    current_node.left = BSTNode(value)
+                    current_node.left = BST(value)
                     break
                 else:
                     current_node = current_node.left # move to the left child
             else:
                 if current_node.right is None:
-                    current_node.right = BSTNode(value)
+                    current_node.right = BST(value)
                     break
                 else:
                     current_node = current_node.right # move to the right child
@@ -89,6 +89,46 @@ class BST:
             else:
                 current_node = current_node.right
         return False
+
+    def visualize(self):
+        """Returns a string representation of the tree with branches."""
+        lines, *_ = self._visualize(self)
+        return '\n'.join(lines)
+
+    def _visualize(self, node):
+        """Helper function to visualize the tree."""
+        if node is None:
+            return ["", 0, 0]  # No node
+
+        # Convert the left and right subtrees into a list of strings
+        left_lines, left_pos, left_width = self._visualize(node.left)
+        right_lines, right_pos, right_width = self._visualize(node.right)
+
+        # Current node's value as a string
+        node_value = str(node.value)
+        node_width = len(node_value)
+
+        # Create the current line representation
+        if left_width > 0:
+            # Connect the left child
+            connector_left = ' ' * (left_pos + 1) + '/'
+        else:
+            connector_left = ''
+
+        if right_width > 0:
+            # Connect the right child
+            connector_right = ' ' * (node_width + left_width + 1) + '\\'
+        else:
+            connector_right = ''
+
+        # Current level of the tree
+        current_line = ' ' * left_pos + node_value + ' ' * (right_pos - left_pos - node_width + 1)
+
+        lines = [current_line] + [connector_left, connector_right] + left_lines + right_lines
+
+        # Calculate new positions and widths for child nodes
+        new_pos = (left_width + right_pos + node_width) // 2
+        return lines, new_pos, node_width + left_width + right_width
 
     # recursive approach itarative requires using Stack
     def inorder(self, tree,array):
@@ -112,34 +152,60 @@ class BST:
             array.append(tree.value)
         return array
 
+    def visualize(self, dot=None):
+        """Visualize the tree using graphviz."""
+        if dot is None:
+            dot = Digraph()
 
+        dot.node(str(self.value), str(self.value))  # Create the node
 
+        # Visualize left child if exists
+        if self.left:
+            dot.edge(str(self.value), str(self.left.value))
+            self.left.visualize(dot)
 
+        # Visualize right child if exists
+        if self.right:
+            dot.edge(str(self.value), str(self.right.value))
+            self.right.visualize(dot)
 
-def visualize_binary_tree(tree):
-    dot = graphviz.Digraph()
-    dot.node(str(tree.root.value))
-
-    def add_nodes_edges(node):
-        if node.left:
-            dot.node(str(node.left.value))
-            dot.edge(str(node.value), str(node.left.value))
-            add_nodes_edges(node.left)
-        if node.right:
-            dot.node(str(node.right.value))
-            dot.edge(str(node.value), str(node.right.value))
-            add_nodes_edges(node.right)
-
-    add_nodes_edges(tree)
-    dot.render('binary_tree', view=True, format='png')
+        return dot
+# def visualize_binary_tree(tree):
+#     dot = graphviz.Digraph()
+#     dot.node(str(tree.root.value))
+#
+#     def add_nodes_edges(node):
+#         if node.left:
+#             dot.node(str(node.left.value))
+#             dot.edge(str(node.value), str(node.left.value))
+#             add_nodes_edges(node.left)
+#         if node.right:
+#             dot.node(str(node.right.value))
+#             dot.edge(str(node.value), str(node.right.value))
+#             add_nodes_edges(node.right)
+#
+#     add_nodes_edges(tree)
+#     dot.render('binary_tree', view=True, format='png')
 
 
 if __name__ == '__main__':
-    nodes = [7, 18, 56, 23, 44, 25, 26]
-    my_tree = BinarySearchTree()
-    for n in nodes:
-        my_tree.insert(n)
+    # Create a BST and insert values using the new method
+    root = BST(10)
+    root.insert(5)
+    root.insert(15)
+    root.insert(2)
+    root.insert(1)
+    root.insert(7)
+    root.insert(13)
+    root.insert(14)
+    root.insert(22)
 
-    visualize_binary_tree(my_tree)
+    # Generate the Markdown representation of the BST
+    tree_representation = root.visualize()
 
-    print("print the end")
+    # Print the result for Markdown
+    print("# Binary Search Tree Visualization\n")
+    print( tree_representation )
+
+
+

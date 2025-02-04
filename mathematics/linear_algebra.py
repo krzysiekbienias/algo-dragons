@@ -1,4 +1,4 @@
-frgit om typing import List
+from  typing import List
 
 import numpy as np
 
