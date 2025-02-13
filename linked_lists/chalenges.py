@@ -1,6 +1,3 @@
-from linked_list import LinkedList
-
-
 # The key takeaway is to adapt the algorithm to the specific structure you’re working with. 😊
 # AlgoExpert defines LinkedList as follows :
 class LinkedList:

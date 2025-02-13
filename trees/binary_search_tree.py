@@ -89,67 +89,35 @@ class BST:
                 current_node = current_node.right
         return False
 
-    def visualize(self):
-        """Returns a string representation of the tree with branches."""
-        lines, *_ = self._visualize(self)
-        return '\n'.join(lines)
-
-    def _visualize(self, node):
-        """Helper function to visualize the tree."""
-        if node is None:
-            return ["", 0, 0]  # No node
-
-        # Convert the left and right subtrees into a list of strings
-        left_lines, left_pos, left_width = self._visualize(node.left)
-        right_lines, right_pos, right_width = self._visualize(node.right)
-
-        # Current node's value as a string
-        node_value = str(node.value)
-        node_width = len(node_value)
-
-        # Create the current line representation
-        if left_width > 0:
-            # Connect the left child
-            connector_left = ' ' * (left_pos + 1) + '/'
-        else:
-            connector_left = ''
-
-        if right_width > 0:
-            # Connect the right child
-            connector_right = ' ' * (node_width + left_width + 1) + '\\'
-        else:
-            connector_right = ''
-
-        # Current level of the tree
-        current_line = ' ' * left_pos + node_value + ' ' * (right_pos - left_pos - node_width + 1)
-
-        lines = [current_line] + [connector_left, connector_right] + left_lines + right_lines
-
-        # Calculate new positions and widths for child nodes
-        new_pos = (left_width + right_pos + node_width) // 2
-        return lines, new_pos, node_width + left_width + right_width
-
     # recursive approach itarative requires using Stack
-    def inorder(self, tree,array):
+    def inorder(self, tree,array=None):
+        if array is None:
+            array=[]
         if tree is not None:
             self.inorder(tree.left,array) # Visit left subtree
             array.append(tree.value)
             self.inorder(tree.right,array)
         return array
 
-    def preorder(self, tree,array):
+    def preorder(self, tree,array=None):
+        if array is None:
+            array=[]
         if tree is not None:
             array.append(tree.value)
             self.preorder(tree.left,array)
             self.preorder(tree.right,array)
         return array
 
-    def postorder(self, tree,array):
+    def postorder(self, tree,array=None):
+        if array is None:
+            array=[]
         if tree is not None:
             self.postorder(tree.left,array)
             self.postorder(tree.right,array)
             array.append(tree.value)
         return array
+
+
 
 
     def visualize(self, dot=None):
@@ -170,8 +138,6 @@ class BST:
         if self.right:
             dot.edge(str(self.value), str(self.right.value), label="R", tailport="se", headport="n")
             self.right.visualize(dot)
-
-        return dot
 
 
 if __name__ == '__main__':

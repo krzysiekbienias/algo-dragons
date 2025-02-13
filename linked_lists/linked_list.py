@@ -1,5 +1,6 @@
 from typing import Any
-
+from graphviz import Digraph
+from IPython.display import display
 import numpy as np
 
 np.random.seed(5)
@@ -20,8 +21,42 @@ class Node:
         self.value = value
         self.next = None
 
-
 class LinkedList:
+    def __init__(self,value):
+        self.value=value
+        self.next = None
+
+    def append(self,value):
+        current_node=self
+        while current_node.next:
+            current_node=current_node.next
+        current_node.next = Node(value)
+
+    def remove_duplicates_from_linked_list(self):
+        current_node = self
+        while current_node is not None and current_node.next is not None:
+
+            if current_node.value == current_node.next.value:
+                current_node.next = current_node.next.next
+            else:
+                current_node = current_node.next
+        return linked_list
+
+    def visualize(self):
+        """Displays a Graphviz visualization of the linked list inline in Jupyter."""
+        dot = Digraph()
+
+        current = self
+        while current:
+            dot.node(str(id(current)), str(current.value))
+            if current.next:
+                dot.edge(str(id(current)), str(id(current.next)))
+            current = current.next
+
+        display(dot)  # Display the graph directly in Jupyter Notebook
+
+
+class LinkedListTwoPointers:
 
     def __init__(self):
         """
