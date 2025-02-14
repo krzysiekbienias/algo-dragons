@@ -3,57 +3,81 @@ from graphviz import Digraph
 from IPython.display import display
 import numpy as np
 
-np.random.seed(5)
-
 
 class Node:
-    def __init__(self, value) -> None:
-        """
-        Description
-        -----------
-        Node object for linked list
-
-        Parameters
-        ----------
-        value : int
-        """
-
+    def __init__(self, value: int):
         self.value = value
         self.next = None
 
+
 class LinkedList:
-    def __init__(self,value):
-        self.value=value
-        self.next = None
+    def __init__(self, value: int | None = None):
+        self.head = Node(value) if value is not None else None  # Maintain a `head` pointer
 
-    def append(self,value):
-        current_node=self
-        while current_node.next:
-            current_node=current_node.next
-        current_node.next = Node(value)
+    def append(self, value: int):
+        if not self.head:
+            self.head = Node(value)
+            return
 
-    def remove_duplicates_from_linked_list(self):
-        current_node = self
-        while current_node is not None and current_node.next is not None:
+        current = self.head
+        while current.next:
+            current = current.next
+        current.next = Node(value)
 
-            if current_node.value == current_node.next.value:
-                current_node.next = current_node.next.next
-            else:
-                current_node = current_node.next
-        return linked_list
+    def is_empty(self):
+        """Returns True if the linked list is empty, otherwise False."""
+        return self.head is None
+
+    def remove_tail(self):
+        if not self.head or not self.head.next:
+            self.head = None  # If only one node, set head to None
+            return
+
+        current = self.head
+        while current.next and current.next.next:
+            current = current.next
+
+        current.next = None  # Remove tail
+
+    def remove_head(self):
+        if not self.head or not self.head.next:
+            self.head = None  # If only one node, set head to None
+            return
+
+        self.head = self.head.next  # Update head reference
+
+    def reverse(self):
+        prev = None
+        current = self.head
+
+        while current:
+            next_node = current.next  # Store next node
+            current.next = prev  # Reverse the link
+            prev = current  # Move prev forward
+            current = next_node  # Move current forward
+
+        self.head = prev
 
     def visualize(self):
         """Displays a Graphviz visualization of the linked list inline in Jupyter."""
         dot = Digraph()
-
-        current = self
+        dot.attr(rankdir="LR")
+        current = self.head
+        visited = set()  # To avoid infinite loops in case of cycles
         while current:
+            if id(current) in visited:  # Detect cycles
+                break
+            visited.add(id(current))
+
             dot.node(str(id(current)), str(current.value))
             if current.next:
-                dot.edge(str(id(current)), str(id(current.next)))
+                dot.edge(str(id(current)), str(id(current.next)))  # Connect to next node
+            else:
+                dot.node("None", "None", shape="plaintext")  # Create None node
+                dot.edge(str(id(current)), "None")  # Last node points to None
             current = current.next
 
-        display(dot)  # Display the graph directly in Jupyter Notebook
+        display(dot)
 
 
 class LinkedListTwoPointers:
@@ -179,29 +203,6 @@ class LinkedListTwoPointers:
         self.tail = None
         self.length = 0
 
-
-class LinkedListWithOneNode:
-
-    def __init__(self, value) -> None:
-        """
-
-        Parameters
-        ----------
-        value :
-        """
-
-        new_node = Node(value)
-
-        self.head = new_node
-        self.tail = new_node
-
-        self.length = 1
-
-    def print_linked_list(self):
-        temp = self.head
-        while self.head is not None:
-            print(str(temp.val) + "->")
-            temp = temp.next
 
 # is it also annother approach where linked ist is constructed and manipulated by managing nodes directly
 
