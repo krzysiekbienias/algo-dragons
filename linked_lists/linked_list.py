@@ -28,6 +28,33 @@ class LinkedList:
         """Returns True if the linked list is empty, otherwise False."""
         return self.head is None
 
+    def size(self):
+        count = 0
+        current = self.head
+        while current:
+            count += 1
+            current = current.next
+        return count
+
+    def search(self, value):
+        current = self.head
+        while current:
+            if current.value == value:
+                return True
+            current = current.next
+        return False
+
+    def get_nth_node(self, index):
+        """Returns the value at the given index (0-based)."""
+        current = self.head
+        count = 0
+        while current:
+            if count == index:
+                return current.value
+            current = current.next
+            count += 1
+        return None
+
     def remove_tail(self):
         if not self.head or not self.head.next:
             self.head = None  # If only one node, set head to None
@@ -45,6 +72,38 @@ class LinkedList:
             return
 
         self.head = self.head.next  # Update head reference
+
+    def remove_duplicates_from_sorted_list(self):
+        # remember that list must be in sorted order in this
+        current = self.head
+        while current is not None and current.next is not None:
+            if current.value == current.next.value:
+                current.next = current.next.next
+            else:
+                current = current.next
+        return self.head
+
+    def remove_duplicates(self):
+        if self.is_empty():
+            return
+
+        current = self.head
+        seen = set()
+        seen.add(current.value)
+        while current.next:
+            if current.next.value in seen:
+                current.next = current.next.next  # Skip node
+            else:
+                seen.add(current.next.value)
+                current = current.next  # move to the next node
+
+    def middle_node(self):
+        slow = self.head
+        fast = self.head
+        while fast is not None and fast.next is not None:
+            fast = fast.next.next
+            slow = slow.next
+        return slow
 
     def reverse(self):
         prev = None
@@ -78,7 +137,6 @@ class LinkedList:
             current = current.next
 
         display(dot)
-
 
 class LinkedListTwoPointers:
 
