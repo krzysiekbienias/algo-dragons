@@ -1,6 +1,6 @@
 # house robery
 
-def house_robbery(arr,i=0,lookup=None):
+def house_robbery(arr, i=0, lookup=None):
     """
     Description
     -----------
@@ -16,13 +16,11 @@ def house_robbery(arr,i=0,lookup=None):
     -------
 
     """
-    lookup={} if lookup is None else lookup
+    lookup = {} if lookup is None else lookup
     if i in lookup:
         return lookup[i]
-    if i>=len(arr):
+    if i >= len(arr):
         return 0
     else:
-        lookup[i]=max(arr[i]+house_robbery(arr,i+2,lookup),house_robbery(arr,i+1,lookup))
+        lookup[i] = max(arr[i] + house_robbery(arr, i + 2, lookup), house_robbery(arr, i + 1, lookup))
         return lookup[i]
-    
-    
