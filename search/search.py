@@ -71,20 +71,55 @@ def search_in_sorted_matrix(matrix, target):
 
 
 def search_for_range(array, target):
+    """
+        Searches for the starting and ending positions of a target value in a sorted array.
+
+        This function uses a two-pointer approach to find the range of indices where the target value appears.
+        If the target is not found in the array, it returns [-1, -1].
+
+        Parameters:
+        -----------
+        array : list of int
+            A sorted list of integers in which to search for the target value.
+        target : int
+            The integer value to search for in the array.
+
+        Returns:
+        --------
+        list of int
+            A list containing two integers representing the starting and ending indices of the target value in the array.
+            If the target is not found, returns [-1, -1].
+
+        Examples:
+        ---------
+        >>> search_for_range([5, 7, 7, 8, 8, 10], 8)
+        [3, 4]
+        >>> search_for_range([5, 7, 7, 8, 8, 10], 6)
+        [-1, -1]
+        """
     l = 0
     r = len(array) - 1
-    while l < r:
-        # left and right values are
-        if array[l] < target and array[r] > target:
+
+    # edge cases: target is outside the range of the array.
+    if target < array[l] or target > array[r]:
+        return [-1, -1]
+    while l <= r:
+        # Narrow down the search range by moving the pointers
+        if array[l] < target < array[r]:
             l += 1
             r -= 1
-        elif array[l]==target and array[r] > target:
-            r-=1
-        elif  array[l]<target and array[l] < target:
-            l+=1
+        elif array[l] <= target < array[r]:
+            r -= 1
+            if l == r and target == array[r]:
+                return [l, l]
+
+        elif array[l] < target and array[r] <= target:
+            l += 1
+            if l == r and target == array[r]:
+                return [r, r]
         else:
-            return [l,r]
-    return [-1,1]
+            return [l, r]
+    return [-1, -1]
 
 
 if __name__ == '__main__':
@@ -96,8 +131,7 @@ if __name__ == '__main__':
         [99, 100, 103, 106, 128, 1004],
     ]
 
-
-    search_for_range([0, 1, 21, 33, 45, 45, 45, 45, 45, 45, 61, 71, 73],45)
+    print(search_for_range([5, 7, 7, 8, 8, 10], 10))
     print(search_in_sorted_matrix(matrix=matrix, target=8))
     array = [0, 1, 21, 33, 45, 45, 61, 71, 72, 73]
     target = 33
