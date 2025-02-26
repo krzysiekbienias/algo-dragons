@@ -155,7 +155,7 @@ def product_sum(array, depth=1):
 
         Parameters:
         ----------
-        array : list
+        arrays : list
             A list containing integers and/or nested lists of integers.
         depth : int, optional
             The current depth of recursion, used as a multiplier (default is 1).

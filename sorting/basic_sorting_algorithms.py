@@ -28,7 +28,7 @@ def insertion_sorting(array):
 def merge(left_array: List[int], right_array: List[int]) -> List[int]:
     """
     Description
-    Merge two sorted arrays into a new sorted array.
+    Merge two sorted arrays into a new sorted arrays.
     Parameters
     ----------
     left_array
@@ -55,7 +55,7 @@ def merge_sort(array: List[int]) -> List[int]:
     """
     Description
     -----------
-    Merge two sorted arrays into a new sorted array.
+    Merge two sorted arrays into a new sorted arrays.
     Parameters
     ----------
     array

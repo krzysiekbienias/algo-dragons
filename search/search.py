@@ -72,22 +72,22 @@ def search_in_sorted_matrix(matrix, target):
 
 def search_for_range(array, target):
     """
-        Searches for the starting and ending positions of a target value in a sorted array.
+        Searches for the starting and ending positions of a target value in a sorted arrays.
 
         This function uses a two-pointer approach to find the range of indices where the target value appears.
-        If the target is not found in the array, it returns [-1, -1].
+        If the target is not found in the arrays, it returns [-1, -1].
 
         Parameters:
         -----------
-        array : list of int
+        arrays : list of int
             A sorted list of integers in which to search for the target value.
         target : int
-            The integer value to search for in the array.
+            The integer value to search for in the arrays.
 
         Returns:
         --------
         list of int
-            A list containing two integers representing the starting and ending indices of the target value in the array.
+            A list containing two integers representing the starting and ending indices of the target value in the arrays.
             If the target is not found, returns [-1, -1].
 
         Examples:
@@ -100,7 +100,7 @@ def search_for_range(array, target):
     l = 0
     r = len(array) - 1
 
-    # edge cases: target is outside the range of the array.
+    # edge cases: target is outside the range of the arrays.
     if target < array[l] or target > array[r]:
         return [-1, -1]
     while l <= r:

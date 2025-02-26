@@ -1,7 +1,45 @@
-from  typing import List
+from typing import List
 
-import numpy as np
 
+class MatrixTraverse:
+    def __init__(self, matrix: List[List[int]] = None):
+        self.__matrix = matrix if matrix is not None else [[]]
+
+    def get_matrix(self) -> List[List[int]]:
+        """Getter method for the matrix attribute."""
+        return self.__matrix
+
+    def set_matrix(self, new_matrix: List[List[int]]):
+        """Setter method for the matrix attribute."""
+        if not isinstance(new_matrix, list) or not all(isinstance(row, list) for row in new_matrix):
+            raise ValueError("Matrix must be a list of lists.")
+        self.__matrix = new_matrix  # Update the private attribute
+
+    def row_by_row(self) -> List[int]:
+        result = []
+        start_row, end_row = 0, len(self.__matrix) - 1
+        start_col, end_col = 0, len(self.__matrix[0]) - 1
+        while start_row <= end_row and start_col <= end_col:
+            for col in range(start_col, end_col + 1):
+                result.append(self.__matrix[start_row][col])
+            start_row += 1
+        return result
+
+    def column_by_column(self) -> List[int]:
+        result = []
+        start_row, end_row = 0, len(self.__matrix) - 1
+        start_col, end_col = 0, len(self.__matrix[0]) - 1
+        while start_row <= end_row and start_col <= end_col:
+            for row in range(start_row, end_row + 1):
+                result.append(self.__matrix[row][start_col])
+            start_col += 1
+        return result
+
+    def snake(self):
+        pass
+
+    def spiral(self):
+        pass
 
 def matrix_multiplication(mat_a, mat_b):
     # remember that we need 3 loops to multiply
@@ -58,12 +96,14 @@ def transpose_matrix(matrix):
     return transpose_matrix
 
 
+
+
 if __name__ == '__main__':
     matrix_a = [[2, 1, 3], [3, 4, 1]]
     matrix_b = [[1, 2, 0, 4], [1, -1, 3, 5], [2, 0, 1, 8]]
     transpose_matrix(matrix_a)
     matrix_c = matrix_multiplication(matrix_a, matrix_b)
 
-    # matrix_a = np.array([[0, 2, 0], [0, 0, 0], [0, 0, 0]])
-    # matrix_b = np.array([[0, 0, 0], [0, 1, 0], [0, 0, 3]])
+    # matrix_a = np.arrays([[0, 2, 0], [0, 0, 0], [0, 0, 0]])
+    # matrix_b = np.arrays([[0, 0, 0], [0, 1, 0], [0, 0, 3]])
     # sparce_matrix(matrix_a, matrix_b)

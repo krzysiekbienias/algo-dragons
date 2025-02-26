@@ -94,7 +94,34 @@ def non_constructible_change(coins):
 
 
 def minimum_loss(prices):
-    # The dictionary di ensures the relationship between the original array and sorted prices is preserved.
+    """
+        Computes the minimum loss when selling a house after purchasing it at a previous time.
+
+        The function sorts the prices and keeps track of their original indices to ensure that
+        only valid transactions (where selling occurs after buying) are considered.
+
+        Parameters
+        ----------
+        prices : list of int
+            A list of unique integers representing house prices at different time instances.
+
+        Returns
+        -------
+        int
+            The minimum loss possible when selling a house after purchasing it earlier.
+
+        Notes
+        -----
+        - The prices are assumed to be unique.
+        - Sorting is used to efficiently compute potential losses.
+        - The function ensures that a valid sale occurs after the purchase.
+
+        Examples
+        --------
+        >>> minimum_loss([20, 15, 10, 17, 12])
+        2
+        """
+    # The dictionary di ensures the relationship between the original arrays and sorted prices is preserved.
     di = dict()
     for i, p in enumerate(prices):
         di[p] = i  # here the value is index and the key assumption in this challenge is that all prices are unique.
@@ -108,6 +135,42 @@ def minimum_loss(prices):
 
 
 def subarray_sort(array):
+    """
+       Finds the smallest subarray that, if sorted, will make the entire array sorted.
+
+       This function identifies the left and right indices of the smallest unsorted
+       subarray in a given list. If the array is already sorted, it returns [-1, -1].
+
+       Parameters
+       ----------
+       array : list of int
+           A list of integers that may be partially unsorted.
+
+       Returns
+       -------
+       list of int
+           A list containing two indices [l, r], where sorting `array[l:r+1]`
+           would sort the entire array. If the array is already sorted, returns [-1, -1].
+
+       Notes
+       -----
+       - The function first checks if the array is already sorted.
+       - It then finds the first index (from the left) where the order is broken.
+       - It finds the first index (from the right) where the order is broken.
+       - Determines the min and max values in the unsorted subarray.
+       - Expands the boundaries if necessary to ensure all misplaced elements are included.
+
+       Examples
+       --------
+       >>> subarray_sort([1, 2, 4, 7, 10, 8, 6, 12, 14, 15])
+       [3, 6]
+
+       >>> subarray_sort([1, 2, 3, 4, 5])
+       [-1, -1]
+
+       >>> subarray_sort([1, 3, 2, 4, 5])
+       [1, 2]
+       """
     if sorted(array) == array:
         return [-1, -1]
     n = len(array)
@@ -172,11 +235,51 @@ def largest_range(arr):
 
 # compare with two-sum challenge
 def three_sum(array, target):
+    """
+    Finds all unique triplets in the array that sum up to the given target.
+
+    This function sorts the input array and uses a two-pointer approach to efficiently
+    find triplets that add up to the target value, while handling duplicates to avoid
+    redundant results.
+
+    Parameters
+    ----------
+    array : list of int
+        A list of integers that may contain duplicates.
+    target : int
+        The target sum for the three numbers.
+
+    Returns
+    -------
+    list of list of int
+        A list containing unique triplets [a, b, c] such that:
+        a + b + c = target.
+
+    Notes
+    -----
+    - The function first sorts the array to simplify searching and duplicate handling.
+    - It iterates through each number and applies a two-pointer approach to find
+      complementing pairs.
+    - To ensure unique triplets, duplicate values are skipped.
+
+    Examples
+    --------
+    >>> three_sum([1, 2, -2, -1, 0, 1, -1], 0)
+    [[-2, 1, 1], [-1, 0, 1]]
+
+    >>> three_sum([4, 3, 0, -1, -2, -3, 2, 1], 0)
+    [[-3, 1, 2], [-2, -1, 3], [-1, 0, 1]]
+
+    >>> three_sum([1, 2, 3, 4, 5], 10)
+    []
+
+    """
+
     array.sort()
     n = len(array)
     result = []
     for i in range(n - 2):  # to not get out of range exception.
-        if i > 0 and array[i] == array[i - 1]:  # handle with duplicates in array
+        if i > 0 and array[i] == array[i - 1]:  # handle with duplicates in arrays
             continue
         left = i + 1
         right = n - 1

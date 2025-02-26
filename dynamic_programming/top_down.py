@@ -12,7 +12,7 @@ def house_robbery(arr, i=0, lookup=None):
         arr : list[int]
             A list of strictly positive integers representing the amount of money in each house.
         i : int, optional
-            The current index in the array during recursion (default is 0).
+            The current index in the arrays during recursion (default is 0).
         lookup : dict, optional
             A dictionary for memoization to store previously computed results (default is None).
 
@@ -42,7 +42,7 @@ def house_robbery(arr, i=0, lookup=None):
 
 def subsets_sum(arr, k, i=0, lookup=None):
     """
-        Counts the number of subsets in the given array that sum up to the target value `k`
+        Counts the number of subsets in the given arrays that sum up to the target value `k`
         using a recursive approach with memoization.
 
         Parameters:
@@ -52,7 +52,7 @@ def subsets_sum(arr, k, i=0, lookup=None):
         k : int
             The target sum to be achieved using subsets of `arr`.
         i : int, optional
-            The current index in the array during recursion (default is 0).
+            The current index in the arrays during recursion (default is 0).
         lookup : dict, optional
             A dictionary for memoization to store previously computed results (default is None).
 
@@ -78,7 +78,7 @@ def subsets_sum(arr, k, i=0, lookup=None):
         print(f"Found a valid subset at ({i}, {k})!")
         return 1
 
-    # Base case: invalid subset (end of array or k < 0)
+    # Base case: invalid subset (end of arrays or k < 0)
     if i == len(arr) or k < 0:
         print(f"No valid subset for ({i}, {k}). Returning 0")
         return 0
