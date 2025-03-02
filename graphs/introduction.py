@@ -1,80 +1,110 @@
 class Graph:
-    def __init__(self, graph_type: str) -> None:
-        self._graph_type = graph_type
-        self.adj_list_representation = {}
+    def __init__(self):
+        """Initialize an empty graph.
 
-    def add_vertex(self, u: (int, str), v=None) -> (dict,None):
-        """add_vertex 
-
-        Description
-        -----------
-        Method to add an vertex to the graph
-
-        Parameters
-        ----------
-        u : int,str
+                The graph is represented as a dictionary where the keys are nodes
+                and the values are sets of adjacent nodes.
         """
+        self.graph = dict()
 
-        if u not in self.adj_list_representation:
+    def add_edge(self, u, v):
+        """Add an edge from node u to node v in the graph.
 
-            self.adj_list_representation[u] = []
-        else:
-            print(f'Vertex {u} already exists.')
+                Parameters
+                ----------
+                u : node
+                    The start node for the edge.
+                v : node
+                    The end node for the edge.
 
-    def remove_vertex(self, u: (int, str)) -> dict:
-        """remove_vertex
-
-        Description
-        -----------
-        Methods to remove a vertex. Please note that we do not remove only a vertex but also all
-        we need to remove vertex from being a neighbor of all other vertices. 
-        Parameters
-        ----------
-        u : int,str
-            _description_
-
-        Returns
-        -------
-        dict
+                Notes
+                -----
+                If node u does not exist in the graph, it is added with v as
+                its adjacent node.
         """
-        if u in self.adj_list_representation:
-            del self.adj_list_representation[u]
-            for v in self.adj_list_representation:
-                if u in self.adj_list_representation[v]:
-                    v.remove(u)
-
-    def traverse_neighbors(self, u: int):
-        if u in self.adj_list_representation:
-            for neighbor in self.adj_list_representation[u]:
-                print(neighbor)
-
-    def add_edge(self, u, v, w=None):
-        if self._graph_type == "direct":
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is None:
-                self.adj_list_representation[u].append(v)
-            elif u in self.adj_list_representation and v in self.adj_list_representation and w is not None:
-                self.adj_list_representation[u].append((v, w))
-        elif self._graph_type == "undirected":
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is None:
-                self.adj_list_representation[u].append(v)
-                self.adj_list_representation[v].append(u)
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is not None:
-                self.adj_list_representation[u].append((v, w))
-                self.adj_list_representation[v].append((u, w))
-
+        if u not in self.graph.keys():
+            self.graph[u] = set([v])
         else:
-            print('Unknown graph type')
+            self.graph[u].add(v)
+        if u not in self.graph.keys():
+            self.graph[u] = set([v])
+        else:
+            self.graph[u].add(v)
 
-    def remove_edge(self, u, v, w=None):
-        if self._graph_type == "direct":
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is None:
-                self.adj_list_representation[u].remove(v)
-            elif u in self.adj_list_representation and v in self.adj_list_representation and w is not None:
-                self.adj_list_representation[u].remove((v, w))
-        elif self._graph_type == "undirected":
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is None:
-                self.adj_list_representation[u].remove(v)
-                self.adj_list_representation[v].remove(u)
-            if u in self.adj_list_representation and v in self.adj_list_representation and w is not None:
-                self.adj_list_representation[u].remove((v, w))
-                self.adj_list_representation[v].remove((u, w))
+    def edge_exists(self, u, v):
+        """Check if an edge exists between nodes u and v.
+
+                Parameters
+                ----------
+                u : node
+                    The first node.
+                v : node
+                    The second node.
+
+                Returns
+                -------
+                bool
+                    True if there is an edge between u and v, False otherwise.
+        """
+        if u in self.graph and v in self.graph:
+            return (v in self.graph[u]) and (u in self.graph[v])
+        return False
+
+    def adjacent_nodes(self, node):
+        """Return a list of nodes adjacent to the given node.
+
+                Parameters
+                ----------
+                node : node
+                    The node for which to find adjacent nodes.
+
+                Returns
+                -------
+                list
+                    A list of nodes adjacent to the specified node.
+
+                Raises
+                ------
+                KeyError
+                    If the node is not in the graph.
+        """
+        return list(self.graph[node])
+
+    def unconnected_vertices(self):
+        """Find all nodes in the graph that have no edges.
+
+                Returns
+                -------
+                list
+                    A list of nodes that are unconnected (i.e., have no edges).
+        """
+        unconnected = []
+        for u in self.graph.keys():
+            if len(self.graph[u]) == 0:
+                unconnected.append(u)
+        return unconnected
+
+    def breadth_first_search(self, v):
+        """Perform a breadth-first search starting from the given node.
+
+                Parameters
+                ----------
+                v : node
+                    The starting node for the search.
+
+                Returns
+                -------
+                list
+                    A list of nodes visited during the breadth-first search.
+        """
+        visited = []
+        to_visit = []
+        to_visit.append(v)
+        while to_visit:
+            s = to_visit.pop(0)
+            visited.append(s)
+            sorted_neighbours = sorted(self.graph[s])
+            for neighbor in sorted_neighbours:
+                if neighbor not in visited and neighbor not in to_visit:
+                    to_visit.append(neighbor)
+        return visited
