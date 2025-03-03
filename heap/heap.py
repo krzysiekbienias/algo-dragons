@@ -2,7 +2,33 @@ import random
 
 
 class MinHeap:
+    def __init__(self):
+        """Initialize a new empty MinHeap.
+
+        Attributes
+        ----------
+        elements: list
+            A list to store the elements of the heap. Elements can be tuples with (priority, value)
+            or single values.
+        """
+        self.elements = []
+
+
     def push(self, value, priority=None):
+        """Add a new value to the heap with an optional priority.
+
+        Parameters
+        ----------
+        value : any
+            The value to be added to the heap.
+        priority : int, optional
+            The priority of the value. If None, the value is added without priority.
+
+        Notes
+        -----
+        If a priority is given, the value is stored as a tuple (priority, value).
+        The new element is placed in the correct position to maintain the heap property.
+        """
         if priority is not None:
             self.elements.append((priority, value))
             self.bubble_up(index=len(self.elements) - 1)  # passing the index of the element you just append, so the
@@ -12,6 +38,18 @@ class MinHeap:
             self.bubble_up(index=len(self.elements) - 1)
 
     def bubble_up(self, index):
+        """Restore the heap property by moving the element at the specified index up.
+
+        Parameters
+        ----------
+        index : int
+            The index of the element to bubble up.
+
+        Notes
+        -----
+        This function compares the element at `index` with its parent and swaps them if necessary,
+        continuing this process until the heap property is restored or the root is reached.
+        """
         if index == 0:
             return
 
@@ -28,8 +66,7 @@ class MinHeap:
                 self.elements[index], self.elements[parent_index] = self.elements[parent_index], self.elements[index]
                 self.bubble_up(parent_index)
 
-    def __init__(self):
-        self.elements = []
+
 
     def peek(self):
         if len(self.elements) == 0:
