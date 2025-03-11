@@ -1,4 +1,4 @@
-from  graphviz import Digraph
+from graphviz import Digraph
 
 
 class BSTNode:
@@ -38,6 +38,7 @@ class BinarySearchTree:
                     return True
                 temp = temp.right
 
+
 # version used in AlgoExpert chalenges
 class BST:
     """
@@ -45,13 +46,14 @@ class BST:
 
        Each node contains a value and pointers to its left and right children.
     """
-    def __init__(self, value:int) -> None:
-        self.value=value
-        self.left=None
-        self.right=None
+
+    def __init__(self, value: int) -> None:
+        self.value = value
+        self.left = None
+        self.right = None
 
     # iterative approach
-    def insert(self, value:int):
+    def insert(self, value: int):
         """
        Check if a given value exists in the Binary Search Tree.
 
@@ -61,64 +63,61 @@ class BST:
        Returns:
            bool: True if the value exists in the tree, False otherwise.
         """
-        current_node=self # start from root
+        current_node = self  # start from root
         while True:
             if value < current_node.value:
                 if current_node.left is None:
                     current_node.left = BST(value)
                     break
                 else:
-                    current_node = current_node.left # move to the left child
+                    current_node = current_node.left  # move to the left child
             else:
                 if current_node.right is None:
                     current_node.right = BST(value)
                     break
                 else:
-                    current_node = current_node.right # move to the right child
+                    current_node = current_node.right  # move to the right child
         return self
 
     # iterative approach
-    def contains(self, value:int) -> bool:
-        current_node=self
+    def contains(self, value: int) -> bool:
+        current_node = self
         while current_node.value is not None:
-            if value==current_node.value:
+            if value == current_node.value:
                 return True
-            if value<current_node.value:
-                current_node = current_node.left # move to the left
+            if value < current_node.value:
+                current_node = current_node.left  # move to the left
             else:
                 current_node = current_node.right
         return False
 
     # recursive approach itarative requires using Stack
-    def inorder(self, tree,array=None):
+    def inorder(self, tree, array=None):
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
-            self.inorder(tree.left,array) # Visit left subtree
+            self.inorder(tree.left, array)  # Visit left subtree
             array.append(tree.value)
-            self.inorder(tree.right,array)
+            self.inorder(tree.right, array)
         return array
 
-    def preorder(self, tree,array=None):
+    def preorder(self, tree, array=None):
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
             array.append(tree.value)
-            self.preorder(tree.left,array)
-            self.preorder(tree.right,array)
+            self.preorder(tree.left, array)
+            self.preorder(tree.right, array)
         return array
 
-    def postorder(self, tree,array=None):
+    def postorder(self, tree, array=None):
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
-            self.postorder(tree.left,array)
-            self.postorder(tree.right,array)
+            self.postorder(tree.left, array)
+            self.postorder(tree.right, array)
             array.append(tree.value)
         return array
-
-
-
 
     def visualize(self, dot=None):
         """Visualize the tree using Graphviz with clear left/right child indication.
@@ -158,7 +157,4 @@ if __name__ == '__main__':
 
     # Print the result for Markdown
     print("# Binary Search Tree Visualization\n")
-    print( tree_representation )
-
-
-
+    print(tree_representation)

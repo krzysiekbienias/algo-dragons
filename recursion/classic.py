@@ -51,11 +51,62 @@ def get_nth_fib(n, lookup=None):
         return lookup[n]
 
 
-# from algo ekspert
-def permutations(arr: list) -> list:
-    pass
+# Permutations
+def permutations_with_memo(arr: list, lookup=None) -> list:
+    # Top-level check for empty input
+    if lookup is None and not arr:
+        return []
+
+    # Initialize lookup if not provided
+    if lookup is None:
+        lookup = {}
+
+    # Convert list to tuple for hashing
+    arr_tuple = tuple(arr)
+
+    # Base case: return a list containing an empty list
+    if not arr:
+        return [[]]
+
+    # Return cached result if available
+    if arr_tuple in lookup:
+        return lookup[arr_tuple]
+
+    # Generate permutations
+    results = []
+    for i in range(len(arr)):
+        curr_el = arr[i]
+        remaining = arr[:i] + arr[i + 1:]  # Exclude the current element
+        for p in permutations_with_memo(remaining, lookup):  # Recursive call
+            results.append([curr_el] + p)  # Build permutations
+
+    # Cache the result
+    lookup[arr_tuple] = results
+    return results
 
 
+def permutations(arr):
+    permutations = []
+    helper_permutations(arr, 0, permutations)
+    return permutations
+
+
+def helper_permutations(arr, start, results):
+    if start == len(arr) - 1:  # if we are in final position
+        results.append(arr.copy())  # append a copy of current_permutation
+        return
+    else:
+        for i in range(start, len(arr)):
+            swap(arr, start, i)  # swap the current element with the start element
+            helper_permutations(arr, start + 1, results)
+            swap(arr, start, i)  # backtrack undo swap
+
+
+def swap(arr, i, j):
+    arr[i], arr[j] = arr[j], arr[i]
+
+
+#END Permutations
 def sum_of_digits(n: int) -> int:
     """
         Recursively calculates the sum of the digits of a given integer `n`.
@@ -193,4 +244,5 @@ def product_sum(array, depth=1):
 
 
 if __name__ == '__main__':
+    print(permutations([1, 2, 3]))
     number_of_divisors(10)
