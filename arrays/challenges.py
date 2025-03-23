@@ -300,6 +300,40 @@ def three_sum(array, target):
     return result
 
 
+def merge_overlapping_intervals(intervals: List[List[int]]) -> List[List[int]]:
+    """
+    Merges a list of overlapping intervals.
+
+    Given a list of intervals represented as [start, end], this function merges all overlapping
+    intervals and returns a list of the resulting non-overlapping intervals sorted by start time.
+
+    Args:
+        intervals (List[List[int]]): A list of intervals where each interval is a list [start, end].
+
+    Returns:
+        List[List[int]]: A list of merged, non-overlapping intervals sorted by their start times.
+
+    Example:
+        >>> merge_overlapping_intervals([[1, 2], [3, 5], [4, 7], [6, 8], [9, 10]])
+        [[1, 2], [3, 8], [9, 10]]
+    """
+    results = []
+    sorted_by_start = sorted(intervals, key=lambda x: x[0])
+    current_start, current_end = sorted_by_start[0]
+    for i in range(1, len(sorted_by_start)):
+        next_start, next_end = sorted_by_start[i]
+        if current_end < next_start:
+            results.append([current_start, current_end])
+            current_start, current_end = next_start, next_end
+
+        else:
+
+            current_end = max(current_end, next_end)
+    results.append([current_start, current_end])
+
+    return results
+
+
 if __name__ == '__main__':
     subarray_sort(array=[1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])
     print(minimum_loss([20, 7, 8, 2, 5]))

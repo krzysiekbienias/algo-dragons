@@ -90,3 +90,59 @@ def sum_of_digits(number):
 
         return number
     return sum_of_digits(number // 10) + number % 10
+
+
+def get_subsequences(s):
+    """
+    Generate all subsequences of a given string.
+
+    Parameters
+    ----------
+    s : str
+        The input string for which subsequences are generated.
+
+    Returns
+    -------
+    list
+        A list containing all subsequences of `s`.
+
+    Notes
+    -----
+    - Uses recursion to generate subsequences.
+    - At each step, two choices are made: include or exclude the current character.
+    - The base case is when the end of the string is reached.
+    """
+    subsequences = []
+    _generate_subsequences(s, 0, "", subsequences)
+    return subsequences
+
+
+def _generate_subsequences(s, i, subsequence, subsequences):
+    """
+    Recursive helper function to generate subsequences.
+
+    Parameters
+    ----------
+    s : str
+        The input string.
+    i : int
+        The current index in the recursion.
+    subsequence : str
+        The current subsequence being formed.
+    subsequences : list
+        The list that stores all generated subsequences.
+
+    Notes
+    -----
+    - If `i` reaches the length of `s`, append the formed subsequence.
+    - Otherwise, recursively call with and without the current character.
+    """
+    if i == len(s):
+        subsequences.append(subsequence)
+        return
+
+    # Include the current character
+    _generate_subsequences(s, i + 1, subsequence + s[i], subsequences)
+
+    # Exclude the current character
+    _generate_subsequences(s, i + 1, subsequence, subsequences)
