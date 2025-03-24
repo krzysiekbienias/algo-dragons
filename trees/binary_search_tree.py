@@ -47,13 +47,13 @@ class BST:
        Each node contains a value and pointers to its left and right children.
     """
 
-    def __init__(self, value: int) -> None:
+    def __init__(self, value: int | None = None) -> None:
         self.value = value
         self.left = None
         self.right = None
 
     # iterative approach
-    def insert(self, value: int):
+    def insert(self, value: int) -> "BST":
         """
        Check if a given value exists in the Binary Search Tree.
 
@@ -63,6 +63,9 @@ class BST:
        Returns:
            bool: True if the value exists in the tree, False otherwise.
         """
+        if self.value is None:
+            self.value = value
+            return self
         current_node = self  # start from root
         while True:
             if value < current_node.value:
