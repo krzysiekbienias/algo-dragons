@@ -1,6 +1,10 @@
 from typing import List
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Top Five Average — Leetcode                     ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
 def top_five_average(marks, threshold=5):
     return sum(marks[:threshold]) // threshold
 
@@ -21,10 +25,14 @@ def high_five(items: List[List[int]]) -> List[List[int]]:
 
 
 def kth_largest_element_in_array(array: List[int], k: int) -> List[int]:
-    # version with sorting is in heap/challenges module
+    # version without sorting is in heap/challenges module
     array = sorted(array, reverse=True)
     return array[:k - 1]
 
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                   Tournament Winner — from AlgoExpert              ║
+# ╚════════════════════════════════════════════════════════════════════╝
 
 #AlgoExpert
 def tournament_winner(competitions, results):
@@ -93,6 +101,11 @@ def non_constructible_change(coins):
     return current_change + 1
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          MinimumLoss — HackerRank                  ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
+
 def minimum_loss(prices):
     """
         Computes the minimum loss when selling a house after purchasing it at a previous time.
@@ -133,6 +146,10 @@ def minimum_loss(prices):
             min_loss = min(min_loss, prices[i] - prices[i - 1])
     return min_loss
 
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                      Subarray sort — AlgoExpert                ║
+# ╚════════════════════════════════════════════════════════════════════╝
 
 def subarray_sort(array):
     """
@@ -233,6 +250,10 @@ def largest_range(arr):
     return result
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          Three Sum — AlgoExpert                    ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
 # compare with two-sum challenge
 def three_sum(array, target):
     """
@@ -300,6 +321,10 @@ def three_sum(array, target):
     return result
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║              Merge Overlapping Integrals — AlgoExpert              ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
 def merge_overlapping_intervals(intervals: List[List[int]]) -> List[List[int]]:
     """
     Merges a list of overlapping intervals.
@@ -334,6 +359,10 @@ def merge_overlapping_intervals(intervals: List[List[int]]) -> List[List[int]]:
     return results
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          Zero sum array — AlgoExpert               ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
 def zero_sum_array(nums):
     if nums == [0]:
         return True
@@ -351,6 +380,105 @@ def zero_sum_array(nums):
         elif prefix_sum == 0 or prefix_sum in seen_sum:
             return True
     return False
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                      Beast Seats — AlgoExpert                      ║
+# ╚════════════════════════════════════════════════════════════════════╝
+def best_seat_in_theatre(seats: List[int]) -> int:
+    """
+        Find the best seat to occupy in a row of seats represented by a list.
+
+        The function analyzes a list of seats, where `0` indicates an available seat
+        and `1` indicates an occupied seat. It returns the index of the best seat to occupy,
+        which is defined as the seat that maximizes the distance to the nearest occupied seat.
+
+        If there are multiple choices for the best seat, the function chooses the seat
+        that is closer to the middle of the available space.
+
+        Parameters:
+        seats (list): A list of integers representing the seats,
+                      where 0 is an available seat and 1 is an occupied seat.
+
+        Returns:
+        int: The index of the best seat to occupy. Returns -1 if no seats are available.
+
+        Example:
+        >>> seats = [1, 0, 0, 0, 1, 0, 1]
+        >>> best_seat_in_theatre(seats)
+        2
+
+        >>> seats = [0, 0, 0, 0]
+        >>> best_seat_in_theatre(seats)
+        1  # Choosing the middle seat in a full row of available seats.
+    """
+    left = 0
+    best_seat = -1
+    max_space = 0
+    while left < len(seats):
+        right = left + 1
+        while right < len(seats) and seats[right] == 0:  # we move pointer where
+            right += 1
+        available_space = right - left - 1
+        if available_space > max_space:
+            best_seat = (left + right) // 2
+            max_space = available_space
+        left = right
+    return best_seat
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                     Majority Element — AlgoExpert                  ║
+# ╚════════════════════════════════════════════════════════════════════╝
+# Boyer-Moore Voting Algorithm
+def majority_element(nums):
+    """
+        Find the majority element in a list of numbers.
+
+        A majority element is defined as an element that appears more than
+        half of the time in the list. This function implements the Boyer-Moore
+        Voting Algorithm to determine the majority element in O(n) time
+        complexity and O(1) space complexity.
+
+        Parameters:
+        nums (list): A list of integers where the majority element is to be found.
+
+        Returns:
+        int or None: The majority element if it exists, otherwise None.
+
+        Example:
+        >>> majority_element([3, 2, 3])
+        3
+
+        >>> majority_element([2, 2, 1, 1, 1, 2, 2])
+        2
+
+        >>> majority_element([1, 2, 3])
+        None
+    """
+    candidate = None
+    count = 0
+    for num in nums:
+        if count == 0:
+            candidate = num
+            count = 1
+        elif num == candidate:
+            count += 1
+        else:
+            count -= 1
+    if nums.count(candidate) > len(nums) // 2:
+        return candidate
+    return None
+
+
+# ════════════════════════ End Majority Element ════════════════════════
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                     Most Common Element — AlgoExpert               ║
+# ╚════════════════════════════════════════════════════════════════════╝
+# it is the mode from statistic.
+def most_common_element(nums):
+    pass
 
 
 if __name__ == '__main__':
