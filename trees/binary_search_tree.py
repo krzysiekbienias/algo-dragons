@@ -9,9 +9,9 @@ class BSTNode:
 
 
 class BinarySearchTree:
-    """ class BinarySearchTree
+    """ Class BinarySearchTree
 
-    Initialise empty binary search tree.
+    Initialise an empty binary search tree.
     """
 
     def __init__(self) -> None:
@@ -39,7 +39,7 @@ class BinarySearchTree:
                 temp = temp.right
 
 
-# version used in AlgoExpert chalenges
+# version used in AlgoExpert challenges
 class BST:
     """
        A class representing a node in a Binary Search Tree (BST).
@@ -55,37 +55,70 @@ class BST:
     # iterative approach
     def insert(self, value: int) -> "BST":
         """
-       Check if a given value exists in the Binary Search Tree.
+        Check if a given value exists in the Binary Search Tree.
 
-       Parameters:
+        Parameters:
            value (int): The value to search for.
 
-       Returns:
+        Returns:
            bool: True if the value exists in the tree, False otherwise.
         """
-        if self.value is None:
-            self.value = value
+        if self.value is not None:
+            current_node = self  # start from root
+            while True:
+               if value < current_node.value:
+                   if current_node.left is None:
+                       current_node.left = BST(value)
+                       break
+                   else:
+                       current_node = current_node.left  # move to the left child
+               else:
+                   if current_node.right is None:
+                       current_node.right = BST(value)
+                       break
+                   else:
+                       current_node = current_node.right  # move to the right child
             return self
-        current_node = self  # start from root
-        while True:
-            if value < current_node.value:
-                if current_node.left is None:
-                    current_node.left = BST(value)
-                    break
-                else:
-                    current_node = current_node.left  # move to the left child
-            else:
-                if current_node.right is None:
-                    current_node.right = BST(value)
-                    break
-                else:
-                    current_node = current_node.right  # move to the right child
+        self.value = value
         return self
+
+
+def get_height(self):
+        if self.value is None:
+            return -1
+        if self.left is not None:
+            left_height = self.left.get_height()
+        else:
+            left_height = -1
+        if self.right is not None:
+
+            right_height = self.right.get_height()
+        else:
+            right_height = -1
+        return 1 + max(left_height, right_height)
+
+    def get_min(self):
+        if self.value is None:
+            return None
+        current_node = self
+        while current_node.left is not None:
+            current_node = current_node.left
+        return current_node.value
+
+    def get_max(self):
+        if self.value is None:
+            return None
+        current_node = self
+        while current_node.right is not None:
+            current_node = current_node.right
+        return current_node.value
 
     # iterative approach
     def contains(self, value: int) -> bool:
+        if self.value is None:
+            return False
         current_node = self
-        while current_node.value is not None:
+        while current_node is not None:
             if value == current_node.value:
                 return True
             if value < current_node.value:
@@ -96,6 +129,7 @@ class BST:
 
     # recursive approach itarative requires using Stack
     def inorder(self, tree, array=None):
+        # INORDER  means that root is IN
         if array is None:
             array = []
         if tree is not None:
@@ -105,6 +139,7 @@ class BST:
         return array
 
     def preorder(self, tree, array=None):
+        # PREORDER root first
         if array is None:
             array = []
         if tree is not None:
@@ -123,8 +158,8 @@ class BST:
         return array
 
     def visualize(self, dot=None):
-        """Visualize the tree using Graphviz with clear left/right child indication.
-        Reocemeded to run this
+        """
+        Visualize the tree using Graphviz with clear left/right child indication.
         """
         if dot is None:
             dot = Digraph()
