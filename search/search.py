@@ -1,25 +1,43 @@
-def binary_search(array, target):
-    l, r = 0, len(array)
-    while r - l > 1:
-        mid = (l + r) // 2
-        if array[mid] < target:
-            l = mid
+from typing import List
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          Binary Search — AlgoExpert                ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
+def binary_search(array: List[int], target: int) -> int:
+    """
+    Returns the index of `target` in a sorted array using binary search.
+    If not found, returns -1.
+
+    Parameters:
+        array (list[int]): A sorted list of integers.
+        target (int): The value to search for.
+
+    Returns:
+        int: The index of the target if found, otherwise -1.
+    """
+    left, right = 0, len(array) - 1
+
+    while left <= right:  # must be <= otherwise it fails on a singleton list
+        mid = (left + right) // 2
+
+        if array[mid] == target:
+            return mid
+        elif array[mid] < target:
+            left = mid + 1
         else:
-            r = mid
-    return array[l] == target
+            right = mid - 1
+
+    return -1
 
 
-def binary_search_index(array, target):
-    l, r = 0, len(array)
-    while r - l > 1:
-        mid = (l + r) // 2
-        if array[mid] > target:
-            r = mid
-        else:
-            l = mid
-    return l if array[l] == target else -1
+# ════════════════════════ End of BFS traversal ════════════════════════
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          Search in Sorted Matrix — AlgoExpert      ║
+# ╚════════════════════════════════════════════════════════════════════╝
 def search_in_sorted_matrix(matrix, target):
     """
     Searches for the target element in a 2D matrix where each row and column is sorted in ascending order.
@@ -70,6 +88,12 @@ def search_in_sorted_matrix(matrix, target):
     return [-1, -1]
 
 
+# ════════════════════════ End of Search in Sorted Matrix ════════════════════════
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                          Search for a range — AlgoExpert      ║
+# ╚════════════════════════════════════════════════════════════════════╝
 def search_for_range(array, target):
     """
         Searches for the starting and ending positions of a target value in a sorted arrays.
@@ -122,6 +146,8 @@ def search_for_range(array, target):
     return [-1, -1]
 
 
+# ════════════════════════ End of Search in Sorted Matrix ════════════════════════
+
 if __name__ == '__main__':
     matrix = [
         [1, 4, 7, 12, 15, 1000],
@@ -135,4 +161,4 @@ if __name__ == '__main__':
     print(search_in_sorted_matrix(matrix=matrix, target=8))
     array = [0, 1, 21, 33, 45, 45, 61, 71, 72, 73]
     target = 33
-    print(binary_search_index(array, target))
+    print(binary_search(array, target))
