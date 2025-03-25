@@ -289,7 +289,7 @@ def three_sum(array, target):
                 result.append([array[i], array[left], array[right]])
                 left += 1
                 right -= 1
-                while left < right and array[left] == array[left - 1]:  # if we have duplicates we only traverse
+                while left < right and array[left] == array[left - 1]:  # if we have duplicates, we only traverse
                     left += 1
                 while left < right and array[right] == array[right + 1]:
                     right -= 1
@@ -334,8 +334,27 @@ def merge_overlapping_intervals(intervals: List[List[int]]) -> List[List[int]]:
     return results
 
 
+def zero_sum_array(nums):
+    if nums == [0]:
+        return True
+    if len(nums) == 0:
+        return False
+    if sum(nums) == 0:
+        return True
+
+    seen_sum = set()
+    prefix_sum = 0
+    for i in range(len(nums)):
+        prefix_sum += nums[i]
+        if not prefix_sum in seen_sum:
+            seen_sum.add(prefix_sum)
+        elif prefix_sum == 0 or prefix_sum in seen_sum:
+            return True
+    return False
+
+
 if __name__ == '__main__':
-    subarray_sort(array=[1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])
+    zero_sum_array(nums=[])
     print(minimum_loss([20, 7, 8, 2, 5]))
     high_five([[1, 91], [1, 92], [2, 93], [2, 97], [1, 60], [2, 77], [1, 65], [1, 87], [1, 100], [2, 100], [2, 76]])
 
