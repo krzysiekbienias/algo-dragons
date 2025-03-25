@@ -14,7 +14,6 @@ class Stack:
         if self.list_stack == []:
             print("The stack is empty")
             return True
-
         else:
             print("Stack contains some elements.")
             return False

@@ -289,7 +289,7 @@ def three_sum(array, target):
                 result.append([array[i], array[left], array[right]])
                 left += 1
                 right -= 1
-                while left < right and array[left] == array[left - 1]:  # if we have duplicates we only traverse
+                while left < right and array[left] == array[left - 1]:  # if we have duplicates, we only traverse
                     left += 1
                 while left < right and array[right] == array[right + 1]:
                     right -= 1
@@ -300,8 +300,61 @@ def three_sum(array, target):
     return result
 
 
+def merge_overlapping_intervals(intervals: List[List[int]]) -> List[List[int]]:
+    """
+    Merges a list of overlapping intervals.
+
+    Given a list of intervals represented as [start, end], this function merges all overlapping
+    intervals and returns a list of the resulting non-overlapping intervals sorted by start time.
+
+    Args:
+        intervals (List[List[int]]): A list of intervals where each interval is a list [start, end].
+
+    Returns:
+        List[List[int]]: A list of merged, non-overlapping intervals sorted by their start times.
+
+    Example:
+        >>> merge_overlapping_intervals([[1, 2], [3, 5], [4, 7], [6, 8], [9, 10]])
+        [[1, 2], [3, 8], [9, 10]]
+    """
+    results = []
+    sorted_by_start = sorted(intervals, key=lambda x: x[0])
+    current_start, current_end = sorted_by_start[0]
+    for i in range(1, len(sorted_by_start)):
+        next_start, next_end = sorted_by_start[i]
+        if current_end < next_start:
+            results.append([current_start, current_end])
+            current_start, current_end = next_start, next_end
+
+        else:
+
+            current_end = max(current_end, next_end)
+    results.append([current_start, current_end])
+
+    return results
+
+
+def zero_sum_array(nums):
+    if nums == [0]:
+        return True
+    if len(nums) == 0:
+        return False
+    if sum(nums) == 0:
+        return True
+
+    seen_sum = set()
+    prefix_sum = 0
+    for i in range(len(nums)):
+        prefix_sum += nums[i]
+        if not prefix_sum in seen_sum:
+            seen_sum.add(prefix_sum)
+        elif prefix_sum == 0 or prefix_sum in seen_sum:
+            return True
+    return False
+
+
 if __name__ == '__main__':
-    subarray_sort(array=[1, 2, 4, 7, 10, 11, 7, 12, 6, 7, 16, 18, 19])
+    zero_sum_array(nums=[])
     print(minimum_loss([20, 7, 8, 2, 5]))
     high_five([[1, 91], [1, 92], [2, 93], [2, 97], [1, 60], [2, 77], [1, 65], [1, 87], [1, 100], [2, 100], [2, 76]])
 

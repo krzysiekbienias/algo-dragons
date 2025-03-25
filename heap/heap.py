@@ -13,7 +13,6 @@ class MinHeap:
         """
         self.elements = []
 
-
     def push(self, value, priority=None):
         """Add a new value to the heap with an optional priority.
 
@@ -65,8 +64,6 @@ class MinHeap:
             if self.elements[index] < self.elements[parent_index]:
                 self.elements[index], self.elements[parent_index] = self.elements[parent_index], self.elements[index]
                 self.bubble_up(parent_index)
-
-
 
     def peek(self):
         if len(self.elements) == 0:

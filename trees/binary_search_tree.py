@@ -1,4 +1,4 @@
-from  graphviz import Digraph
+from graphviz import Digraph
 
 
 class BSTNode:
@@ -9,9 +9,9 @@ class BSTNode:
 
 
 class BinarySearchTree:
-    """ class BinarySearchTree
+    """ Class BinarySearchTree
 
-    Initialise empty binary search tree.
+    Initialise an empty binary search tree.
     """
 
     def __init__(self) -> None:
@@ -38,91 +38,128 @@ class BinarySearchTree:
                     return True
                 temp = temp.right
 
-# version used in AlgoExpert chalenges
+
+# version used in AlgoExpert challenges
 class BST:
     """
        A class representing a node in a Binary Search Tree (BST).
 
        Each node contains a value and pointers to its left and right children.
     """
-    def __init__(self, value:int) -> None:
-        self.value=value
-        self.left=None
-        self.right=None
+
+    def __init__(self, value: int | None = None) -> None:
+        self.value = value
+        self.left = None
+        self.right = None
 
     # iterative approach
-    def insert(self, value:int):
+    def insert(self, value: int) -> "BST":
         """
-       Check if a given value exists in the Binary Search Tree.
+        Check if a given value exists in the Binary Search Tree.
 
-       Parameters:
+        Parameters:
            value (int): The value to search for.
 
-       Returns:
+        Returns:
            bool: True if the value exists in the tree, False otherwise.
         """
-        current_node=self # start from root
-        while True:
-            if value < current_node.value:
-                if current_node.left is None:
-                    current_node.left = BST(value)
-                    break
-                else:
-                    current_node = current_node.left # move to the left child
-            else:
-                if current_node.right is None:
-                    current_node.right = BST(value)
-                    break
-                else:
-                    current_node = current_node.right # move to the right child
+        if self.value is not None:
+            current_node = self  # start from root
+            while True:
+               if value < current_node.value:
+                   if current_node.left is None:
+                       current_node.left = BST(value)
+                       break
+                   else:
+                       current_node = current_node.left  # move to the left child
+               else:
+                   if current_node.right is None:
+                       current_node.right = BST(value)
+                       break
+                   else:
+                       current_node = current_node.right  # move to the right child
+            return self
+        self.value = value
         return self
 
+
+def get_height(self):
+        if self.value is None:
+            return -1
+        if self.left is not None:
+            left_height = self.left.get_height()
+        else:
+            left_height = -1
+        if self.right is not None:
+
+            right_height = self.right.get_height()
+        else:
+            right_height = -1
+        return 1 + max(left_height, right_height)
+
+    def get_min(self):
+        if self.value is None:
+            return None
+        current_node = self
+        while current_node.left is not None:
+            current_node = current_node.left
+        return current_node.value
+
+    def get_max(self):
+        if self.value is None:
+            return None
+        current_node = self
+        while current_node.right is not None:
+            current_node = current_node.right
+        return current_node.value
+
     # iterative approach
-    def contains(self, value:int) -> bool:
-        current_node=self
-        while current_node.value is not None:
-            if value==current_node.value:
+    def contains(self, value: int) -> bool:
+        if self.value is None:
+            return False
+        current_node = self
+        while current_node is not None:
+            if value == current_node.value:
                 return True
-            if value<current_node.value:
-                current_node = current_node.left # move to the left
+            if value < current_node.value:
+                current_node = current_node.left  # move to the left
             else:
                 current_node = current_node.right
         return False
 
     # recursive approach itarative requires using Stack
-    def inorder(self, tree,array=None):
+    def inorder(self, tree, array=None):
+        # INORDER  means that root is IN
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
-            self.inorder(tree.left,array) # Visit left subtree
+            self.inorder(tree.left, array)  # Visit left subtree
             array.append(tree.value)
-            self.inorder(tree.right,array)
+            self.inorder(tree.right, array)
         return array
 
-    def preorder(self, tree,array=None):
+    def preorder(self, tree, array=None):
+        # PREORDER root first
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
             array.append(tree.value)
-            self.preorder(tree.left,array)
-            self.preorder(tree.right,array)
+            self.preorder(tree.left, array)
+            self.preorder(tree.right, array)
         return array
 
-    def postorder(self, tree,array=None):
+    def postorder(self, tree, array=None):
         if array is None:
-            array=[]
+            array = []
         if tree is not None:
-            self.postorder(tree.left,array)
-            self.postorder(tree.right,array)
+            self.postorder(tree.left, array)
+            self.postorder(tree.right, array)
             array.append(tree.value)
         return array
-
-
-
 
     def visualize(self, dot=None):
-        """Visualize the tree using Graphviz with clear left/right child indication.
-        Reocemeded to run this
+        """
+        Visualize the tree using Graphviz with clear left/right child indication.
         """
         if dot is None:
             dot = Digraph()
@@ -158,7 +195,4 @@ if __name__ == '__main__':
 
     # Print the result for Markdown
     print("# Binary Search Tree Visualization\n")
-    print( tree_representation )
-
-
-
+    print(tree_representation)
