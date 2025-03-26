@@ -47,6 +47,47 @@ def water_area(heights: List[int]) -> int:
     return max_area
 
 
+def min_number_of_coins(amount: int, coins: List[int]) -> int|float:
+    """
+        Calculates the minimum number of coins required to make up a given amount
+        using the provided denominations. If it's not possible to form the amount,
+        returns -1.
+
+        This implementation uses bottom-up dynamic programming (tabulation).
+
+        Parameters:
+            coins (list[int]): A list of distinct positive integers representing coin denominations.
+            amount (int): The total amount to form.
+
+        Returns:
+            int: The minimum number of coins needed to make up the given amount,
+                 or -1 if the amount cannot be formed with the given coins.
+
+        Example:
+            coins = [1, 2, 5], amount = 11
+            → returns 3 (5 + 5 + 1)
+
+        Notes:
+            - dp[i] represents the minimum number of coins required to make amount i.
+            - dp[0] = 0 since no coins are needed to make amount 0.
+            - If no combination can form the amount, the value stays as float('inf').
+
+        Time Complexity: O(amount * len(coins))
+        Space Complexity: O(amount)
+    """
+    dp = [float("inf")] * (amount + 1)
+    dp[0] = 0 # because to make amount 0 we need zero coins
+    for i in range(1, amount + 1):
+        for coin in coins:
+            if i - coin >= 0:
+                dp[i] = min(dp[i], dp[i - coin] + 1)
+    if dp[amount] != float("inf"):
+        return dp[amount]
+    else:
+        return -1
+
+
+
 if __name__ == '__main__':
     watter_area_t1 = [0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]
     water_area(heights=watter_area_t1)
