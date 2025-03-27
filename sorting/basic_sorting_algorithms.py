@@ -41,6 +41,28 @@ def bubble_sort(arr: List[int]):
 
 
 def insertion_sorting(array):
+    """
+        Sort a list of elements using the insertion sort algorithm.
+
+        Insertion sort is an online algorithm that builds a sorted array one element
+        at a time. It works by iterating through the input array and considering
+        each element one at a time, inserting it into its correct position
+        within the previously sorted elements.
+
+        Parameters:
+        array (list): A list of elements to be sorted. The elements can be of any
+                      type that supports comparison (e.g., integers, floats, strings).
+
+        Returns:
+        list: The sorted list in ascending order.
+
+        Example:
+        >>> insertion_sorting([5, 2, 9, 1, 5, 6])
+        [1, 2, 5, 5, 6, 9]
+
+        >>> insertion_sorting(['banana', 'apple', 'cherry'])
+        ['apple', 'banana', 'cherry']
+        """
     # It is an online algorithm. Does not require all input data upfront
     for i in range(1, len(array)):
         j = i
@@ -100,7 +122,6 @@ def merge_sort(array: List[int]) -> List[int]:
 
 
 if __name__ == '__main__':
-    merge_overlapping_intervals([[1, 2], [3, 5], [4, 7], [6, 8], [9, 10]])
     test_array = [8, 5, 2, 9, 6, 3]
     print('Isertion sorting')
     res = insertion_sorting(array=test_array)

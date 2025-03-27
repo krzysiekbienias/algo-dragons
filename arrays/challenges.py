@@ -148,7 +148,7 @@ def minimum_loss(prices):
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
-# ║                      Subarray sort — AlgoExpert                ║
+# ║                      Subarray sort — AlgoExpert                    ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
 def subarray_sort(array):
@@ -220,8 +220,39 @@ def missing_numbers(nums):
     return result
 
 
-def is_valid_subsequence(array, sequence):
-    pass
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                      Valid Subsequence — AlgoExpert                ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
+def is_valid_subsequence(array:List[int], sequence:List[int]):
+
+    """
+    Check if the `sequence` is a valid subsequence of the `array`.
+
+    A valid subsequence is derived from the `array` by deleting some elements
+    without changing the order of the remaining elements.
+
+    Parameters
+    ----------
+    array : list
+        The main list from which the subsequence is derived.
+    sequence : list
+        The list that needs to be checked as a subsequence of `array`.
+
+    Returns
+    -------
+    bool
+        True if `sequence` is a valid subsequence of `array`, False otherwise.
+    """
+    array_index = 0
+    subsequent_index = 0
+    while array_index < len(array) and subsequent_index < len(sequence):
+        if array[array_index] == sequence[subsequent_index]:
+            array_index += 1
+            subsequent_index += 1
+        else:
+            array_index += 1  # we move only index in full array
+    return subsequent_index == len(sequence)
 
 
 # version where we may sort
