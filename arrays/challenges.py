@@ -87,8 +87,36 @@ def smallest_difference(array_one, array_two):
     return closest_pair
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                   Non Constructible change — from AlgoExpert              ║
+# ╚════════════════════════════════════════════════════════════════════╝
 # AlgoExpert
-def non_constructible_change(coins):
+def non_constructible_change(coins:List[int]):
+    """
+        Determine the smallest non-constructible change amount.
+
+        Given a list of coin denominations, this function calculates the smallest
+        amount of change that cannot be constructed with the available coin denominations
+        when sorted in ascending order.
+
+        Parameters
+        ----------
+        coins : list of int
+            A list of positive integers representing coin denominations.
+
+        Returns
+        -------
+        int
+            The smallest non-constructible change amount. Returns 1 if no coins are provided,
+            indicating that the first change amount can't be constructed.
+
+        Notes
+        -----
+        The algorithm works by sorting the coins and iteratively checking if the current
+        change can be constructed with the available coins. If at any point a coin is found
+        that is greater than the current change amount, then the next non-constructible
+        change is `current_change + 1`.
+    """
     coins.sort()
     if not coins:
         return 1
@@ -224,8 +252,7 @@ def missing_numbers(nums):
 # ║                      Valid Subsequence — AlgoExpert                ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
-def is_valid_subsequence(array:List[int], sequence:List[int]):
-
+def is_valid_subsequence(array: List[int], sequence: List[int]):
     """
     Check if the `sequence` is a valid subsequence of the `array`.
 
