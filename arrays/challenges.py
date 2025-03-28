@@ -2,6 +2,50 @@ from typing import List
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Two number sum — AlgoExper                    ║
+# ╚════════════════════════════════════════════════════════════════════╝
+def two_number_sum(array, target_sum):
+    """
+    Find two numbers in the array that sum up to the target sum.
+
+    This function searches for a pair of numbers in the provided array that
+    add up to the specified target sum. It returns the first found pair
+    as a list. If no such pair exists, it returns an empty list.
+
+    Parameters
+    ----------
+    array : list of int
+        A list of integers in which to search for the two numbers.
+    targetSum : int
+        The target sum that the two numbers should equal.
+
+    Returns
+    -------
+    list of int
+        A list containing the two numbers that sum to the target sum.
+        Returns an empty list if no such pair exists.
+
+    Notes
+    -----
+    The function first sorts the array and then employs a two-pointer technique
+    to find the pair. The low pointer starts at the beginning of the sorted array,
+    while the high pointer starts at the end. The pointers move inward
+    based on the sum comparison to the target sum.
+    """
+    array.sort()
+    low_p = 0
+    high_p = len(array) - 1
+    while low_p < high_p:
+        if array[low_p] + array[high_p] == target_sum:
+            return [array[low_p], array[high_p]]
+        elif array[low_p] + array[high_p] < target_sum:
+            low_p += 1
+        else:
+            high_p -= 1
+    return []
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
 # ║                    Top Five Average — Leetcode                     ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
@@ -88,10 +132,10 @@ def smallest_difference(array_one, array_two):
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
-# ║                   Non Constructible change — from AlgoExpert              ║
+# ║                   Non Constructible change — from AlgoExpert       ║
 # ╚════════════════════════════════════════════════════════════════════╝
 # AlgoExpert
-def non_constructible_change(coins:List[int]):
+def non_constructible_change(coins: List[int]):
     """
         Determine the smallest non-constructible change amount.
 
@@ -538,6 +582,43 @@ def majority_element(nums):
 def most_common_element(nums):
     pass
 
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Max Profit 1 transaction — LeetCode             ║
+# ╚════════════════════════════════════════════════════════════════════╝
+def max_profit_bf(prices):
+    """
+       Calculate the maximum profit from buying and selling a stock given the prices.
+
+       This function uses a brute-force approach to determine the maximum profit that
+       can be achieved by buying a stock on one day and selling it on a subsequent day.
+
+       Parameters:
+       prices (list): A list of integers where each integer represents the stock price
+                      on a specific day.
+
+       Returns:
+       int: The maximum profit that can be made. If no profit can be made, returns 0.
+
+       Time Complexity:
+       The function has a time complexity of O(n^2), where n is the number of days (length of
+       the prices list). This is because it uses two nested loops to evaluate each pair of
+       buy and sell timings.
+
+       Space Complexity:
+       The space complexity is O(1) since only a constant amount of additional space is used.
+       """
+    max_profit = 0
+    for i in range(len(prices)):
+        buy_price = prices[i]
+        for j in range(i + 1, len(prices)):
+            possible_sell = prices[j]
+            max_profit = max(max_profit, possible_sell - buy_price)
+    return max_profit
+
+
+def max_profit(prices:list[int]):
+    pass
 
 if __name__ == '__main__':
     zero_sum_array(nums=[])
