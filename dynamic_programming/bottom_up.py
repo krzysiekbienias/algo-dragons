@@ -47,7 +47,11 @@ def water_area(heights: List[int]) -> int:
     return max_area
 
 
-def min_number_of_coins(amount: int, coins: List[int]) -> int|float:
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Minimum number of coins — LeetCode             ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
+def min_number_of_coins(amount: int, coins: List[int]) -> int | float:
     """
         Calculates the minimum number of coins required to make up a given amount
         using the provided denominations. If it's not possible to form the amount,
@@ -76,7 +80,7 @@ def min_number_of_coins(amount: int, coins: List[int]) -> int|float:
         Space Complexity: O(amount)
     """
     dp = [float("inf")] * (amount + 1)
-    dp[0] = 0 # because to make amount 0 we need zero coins
+    dp[0] = 0  # because to make amount 0 we need zero coins
     for i in range(1, amount + 1):
         for coin in coins:
             if i - coin >= 0:
@@ -86,9 +90,66 @@ def min_number_of_coins(amount: int, coins: List[int]) -> int|float:
     else:
         return -1
 
-def best_time_to_sell_and_buy()
+
+def knapsack_0_1_problem(values: list[int], weights: list[int], k: int):
+    dp = [[0] * (k + 1) for _ in range(len(values))]
+    if k == 0:
+        return 0
+    # if capacity is above weights we may pack in everything in the backpack
+    if k > sum(weights):
+        return sum(values)
+    for j in range(weights[0], k + 1):
+        dp[0][j] = values[0]
+
+    for i in range(1, len(values)):
+        for j in range(k + 1):
+            if weights[i] > j:
+                dp[i][j] = dp[i - 1][j]
+            else:
+                dp[i][j] = max(values[i] + dp[i - 1][j - weights[i]], dp[i - 1][j])
+    return dp[len(weights)][k]
+
+
+def knapsack_0_1_problem_with_items_monitor(values: list[int], weights: list[int], k: int):
+    dp = [[0] * (k + 1) for _ in range(len(values))]
+
+    """
+    What selected[i][j] Represents?
+    True: Item i was selected for the knapsack when the remaining capacity was j.
+    False: Item i was skipped at capacity j.
+    """
+    selected = [[False] * (k + 1) for _ in range(len(values))] # for tracking selection
+    if k == 0:
+        return 0
+    # if capacity is above weights we may pack in everything in the backpack
+    if k > sum(weights):
+        return sum(values)
+    for j in range(weights[0], k + 1):
+        dp[0][j] = values[0]
+
+    for i in range(1, len(values)):
+        for j in range(k + 1):
+            if weights[i] > j:
+                dp[i][j] = dp[i - 1][j]
+                selected[i][j]=True
+            else:
+                dp[i][j] = max(values[i] + dp[i - 1][j - weights[i]], dp[i - 1][j])
+                selected[i][j]=True
+    # Backtrack to find selected items (1-based indices)
+    res = []
+    remaining_capacity = k
+    for i in range(len(values) - 1, -1, -1):
+        if selected[i][remaining_capacity]:
+            res.append(i + 1)  # Convert to 1-based index
+            remaining_capacity -= weights[i]
+
+    return [dp[len(values) - 1][k],res]
+
+
 
 if __name__ == '__main__':
+    # [[1, 2], [4, 3], [5, 6], [6, 7]], 10)
+    knapsack_0_1_problem_with_items_monitor(values=[1, 4, 5, 6], weights=[2, 3, 6, 7], k=10)
     watter_area_t1 = [0, 8, 0, 0, 5, 0, 0, 10, 0, 0, 1, 1, 0, 3]
     water_area(heights=watter_area_t1)
     print(minimum_total([[2], [3, 4], [6, 5, 7], [4, 1, 8, 3]]))
