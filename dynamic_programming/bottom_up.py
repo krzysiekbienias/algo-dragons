@@ -2,6 +2,19 @@ from typing import List
 import math
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Minimum number of coins — LeetCode              ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
+def house_robbery(arr: List[int]) -> int:
+    if len(arr) == 1:
+        return arr[0]
+    if len(arr) == 2:
+        return max(arr[0], arr[1])
+    dp = [0] * len(arr)
+    dp[0] = arr[0]
+
+
 # 120 Triangle - leetcode - medium
 def minimum_total(triangle: List[List[int]]) -> int:
     n = len(triangle)
@@ -48,7 +61,7 @@ def water_area(heights: List[int]) -> int:
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
-# ║                    Minimum number of coins — LeetCode             ║
+# ║                    Minimum number of coins — LeetCode              ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
 def min_number_of_coins(amount: int, coins: List[int]) -> int | float:
@@ -91,6 +104,10 @@ def min_number_of_coins(amount: int, coins: List[int]) -> int | float:
         return -1
 
 
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Knapsac 0-1 — AlgoExpert                        ║
+# ╚════════════════════════════════════════════════════════════════════╝
+
 def knapsack_0_1_problem(values: list[int], weights: list[int], k: int):
     dp = [[0] * (k + 1) for _ in range(len(values))]
     if k == 0:
@@ -118,7 +135,7 @@ def knapsack_0_1_problem_with_items_monitor(values: list[int], weights: list[int
     True: Item i was selected for the knapsack when the remaining capacity was j.
     False: Item i was skipped at capacity j.
     """
-    selected = [[False] * (k + 1) for _ in range(len(values))] # for tracking selection
+    selected = [[False] * (k + 1) for _ in range(len(values))]  # for tracking selection
     if k == 0:
         return 0
     # if capacity is above weights we may pack in everything in the backpack
@@ -131,10 +148,10 @@ def knapsack_0_1_problem_with_items_monitor(values: list[int], weights: list[int
         for j in range(k + 1):
             if weights[i] > j:
                 dp[i][j] = dp[i - 1][j]
-                selected[i][j]=True
+                selected[i][j] = True
             else:
                 dp[i][j] = max(values[i] + dp[i - 1][j - weights[i]], dp[i - 1][j])
-                selected[i][j]=True
+                selected[i][j] = True
     # Backtrack to find selected items (1-based indices)
     res = []
     remaining_capacity = k
@@ -143,8 +160,7 @@ def knapsack_0_1_problem_with_items_monitor(values: list[int], weights: list[int
             res.append(i + 1)  # Convert to 1-based index
             remaining_capacity -= weights[i]
 
-    return [dp[len(values) - 1][k],res]
-
+    return [dp[len(values) - 1][k], res]
 
 
 if __name__ == '__main__':
