@@ -4,7 +4,7 @@ from typing import List
 # ╔════════════════════════════════════════════════════════════════════╗
 # ║                    Two number sum — AlgoExper                    ║
 # ╚════════════════════════════════════════════════════════════════════╝
-def two_number_sum(array, target_sum):
+def two_number_sum(array, target_sum: int):
     """
     Find two numbers in the array that sum up to the target sum.
 
@@ -16,7 +16,7 @@ def two_number_sum(array, target_sum):
     ----------
     array : list of int
         A list of integers in which to search for the two numbers.
-    targetSum : int
+    target_sum : int
         The target sum that the two numbers should equal.
 
     Returns
@@ -46,7 +46,66 @@ def two_number_sum(array, target_sum):
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
-# ║                    Top Five Average — Leetcode                     ║
+# ║              Rescue Boats — Udemy (50 days of LeetCode)            ║
+# ╚════════════════════════════════════════════════════════════════════╝
+def num_of_rescue_boats(people, limit):
+    """
+    Calculate the minimum number of boats needed to rescue all people, following the 2-person limit rule.
+
+    Each boat can carry at most 2 people with a given weight limit. The function uses a two-pointer
+    approach to optimally pair the heaviest and lightest remaining person when possible.
+
+    Parameters
+    ----------
+    people : list[int]
+        List of people's weights. Each person's weight is guaranteed to be <= limit.
+    limit : int
+        Maximum weight capacity of each boat (must be positive).
+
+    Returns
+    -------
+    int
+        Minimum number of boats required to rescue all people.
+
+    Examples
+    --------
+    >>> num_of_rescue_boats([100, 200, 150, 80], 200)
+    3
+    >>> num_of_rescue_boats([50, 70, 90, 30], 100)
+    3
+
+    Notes
+    -----
+    - The solution first sorts the people array (O(n log n) time)
+    - Uses a greedy two-pointer approach (O(n) time after sorting)
+    - Each boat carries at most 2 people (as per problem constraints)
+    - Optimal pairing strategy: Try to pair heaviest + lightest remaining person
+
+    Time Complexity
+    --------------
+    O(n log n) due to the sorting step (where n = len(people))
+
+    Space Complexity
+    ---------------
+    O(1) (constant space for pointers and counter)
+    """
+    people.sort()
+    left_p = 0
+    right_p = len(people) - 1
+    nb_of_boats = 0
+    while left_p <= right_p:
+        if people[left_p] + people[right_p] <= limit:
+            nb_of_boats += 1  # because each boat carries at most 2 people
+            left_p += 1
+            right_p -= 1
+        else:
+            nb_of_boats += 1
+            right_p -= 1
+    return nb_of_boats
+
+
+# ╔════════════════════════════════════════════════════════════════════╗
+# ║                    Top Five Average — LeetCode                     ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
 def top_five_average(marks, threshold=5):
@@ -617,8 +676,9 @@ def max_profit_bf(prices):
     return max_profit
 
 
-def max_profit(prices:list[int]):
+def max_profit(prices: list[int]):
     pass
+
 
 if __name__ == '__main__':
     zero_sum_array(nums=[])

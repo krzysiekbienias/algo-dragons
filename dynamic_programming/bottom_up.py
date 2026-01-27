@@ -3,16 +3,58 @@ import math
 
 
 # ╔════════════════════════════════════════════════════════════════════╗
-# ║                    Minimum number of coins — LeetCode              ║
+# ║                    House Robbery — AlgoExpert                       ║
 # ╚════════════════════════════════════════════════════════════════════╝
 
 def house_robbery(arr: List[int]) -> int:
+    """
+        Calculate the maximum robbery amount from non-adjacent houses using dynamic programming.
+
+        Parameters
+        ----------
+        arr : List[int]
+            Array of non-negative integers representing money in each house.
+            Must contain at least 1 element.
+            Example: [2, 7, 9, 3, 1]
+
+        Returns
+        -------
+        int
+            Maximum amount that can be robbed without alerting police.
+            Example: For input [2,7,9,3,1], returns 12 (2 + 9 + 1)
+
+        Notes
+        -----
+        Algorithm:
+        - Uses dynamic programming with O(n) time and space complexity
+        - Recurrence relation: dp[i] = max(dp[i-1], dp[i-2] + arr[i])
+        - Base cases:
+            * Single house: return arr[0]
+            * Two houses: return max(arr[0], arr[1])
+
+        Examples
+        --------
+        >>> house_robbery([2, 7, 9, 3, 1])
+        12
+        >>> house_robbery([1, 2, 3, 1])
+        4
+        >>> house_robbery([100, 1, 1, 100])
+        200
+
+        Raises
+        ------
+        ValueError
+            If input array is empty (implicitly handled by IndexError in current implementation)
+        """
     if len(arr) == 1:
         return arr[0]
     if len(arr) == 2:
         return max(arr[0], arr[1])
     dp = [0] * len(arr)
     dp[0] = arr[0]
+    for i in range(2, len(arr)):
+        dp[i] = max(dp[i-1], dp[i-2] + arr[i])
+    return dp[len(arr)-1]
 
 
 # 120 Triangle - leetcode - medium
@@ -112,7 +154,7 @@ def knapsack_0_1_problem(values: list[int], weights: list[int], k: int):
     dp = [[0] * (k + 1) for _ in range(len(values))]
     if k == 0:
         return 0
-    # if capacity is above weights we may pack in everything in the backpack
+    # if capacity is above weights, we may pack in everything in the backpack
     if k > sum(weights):
         return sum(values)
     for j in range(weights[0], k + 1):
