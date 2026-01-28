@@ -1,5 +1,5 @@
 import pytest
-from matrix import clean_up_after_your_dog
+from matrix.clean_up_after_your_dog import crap
 
 
 @pytest.mark.parametrize(
@@ -13,5 +13,5 @@ from matrix import clean_up_after_your_dog
     ],
 )
 def test_basic_cases(garden, bags, cap, expected):
-    # x[:] w Codewars robi "płytką kopię" listy wierszy; tu zachowujemy to samo:
-    assert clean_up_after_your_dog(garden[:], bags, cap) == expected
+
+    assert crap(garden[:], bags, cap) == expected

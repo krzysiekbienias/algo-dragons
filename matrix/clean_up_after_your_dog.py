@@ -1,7 +1,7 @@
 
 
 def crap(garden: list[list[str]], bags: int, cap: int) -> str:
-    #your code here
+    for row in garden:
+        print(row);
     return 'Dog!!'
-
 
